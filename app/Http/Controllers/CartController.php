@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MenuItem;
+use App\Models\Order;  // Import should be at the top, outside any class or method
 
 class CartController extends Controller
 {
@@ -32,11 +33,25 @@ class CartController extends Controller
         $cart = session()->get('cart');
         return view('cart.index', compact('cart'));
     }
-    public function checkout()
-{
-    // Simulate a payment processing
-    session()->forget('cart'); // Optionally clear the cart
-    return redirect()->route('checkout.success')->with('success', 'Payment successful! Your order is being processed.');
-}
 
+    public function checkout(Request $request)
+{
+    $cart = session('cart');
+    $total = array_sum(array_map(function ($item) {
+        return $item['price'] * $item['quantity'];
+    }, $cart));
+
+    // Create order
+    $order = Order::create([
+        'user_id' => auth()->id(),
+        'total' => $total,
+        'status' => 'completed'  // Example status
+    ]);
+
+    // Clear cart
+    session()->forget('cart');
+
+    // Redirect to a success page
+    return redirect()->route('checkout.success')->with('order_id', $order->id);
+}
 }

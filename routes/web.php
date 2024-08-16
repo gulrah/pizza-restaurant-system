@@ -50,10 +50,21 @@ Route::get('checkout/success', function () {
 Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
 Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+// Web.php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
+});
+
 
 // Admin Specific Routes
 Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('admin')->middleware('is_admin')->group(function () {
+        Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+        Route::get('/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
+        // Other admin routes...
+    });
+    
 
     // Admin Menu Management
     Route::get('menu/create', [AdminMenuController::class, 'create'])->name('menu.create');
