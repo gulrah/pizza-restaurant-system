@@ -19,23 +19,17 @@ class ReservationController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'reservation_time' => 'required|date',
-            'number_of_guests' => 'required|integer',
-            'special_requests' => 'nullable|string'
-        ]);
+{
+    $request->validate([
+        'reservation_time' => 'required|date',
+        'number_of_guests' => 'required|integer',
+        'special_requests' => 'nullable|string'
+    ]);
 
-        $reservation = new Reservation([
-            'user_id' => auth()->id(),
-            'reservation_time' => $request->reservation_time,
-            'number_of_guests' => $request->number_of_guests,
-            'special_requests' => $request->special_requests,
-            'status' => 'pending'
-        ]);
+    $reservation = new Reservation($request->all());
+    $reservation->user_id = auth()->id();
+    $reservation->save();
 
-        $reservation->save();
-
-        return redirect()->route('reservations.index')->with('success', 'Reservation made successfully!');
-    }
+    return redirect()->route('reservations.index')->with('success', 'Reservation made successfully!');
+}
 }

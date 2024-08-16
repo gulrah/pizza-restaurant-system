@@ -2,13 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h2>Your Reservations</h2>
-    @foreach ($reservations as $reservation)
-        <div>
-            <p>Reservation for {{ $reservation->number_of_guests }} on {{ $reservation->reservation_time }}</p>
-            <p>Status: {{ $reservation->status }}</p>
-            <p>Special Requests: {{ $reservation->special_requests }}</p>
-        </div>
-    @endforeach
+    <h1>My Reservations</h1>
+    <a href="{{ route('reservations.create') }}" class="btn btn-primary">Add New Reservation</a>
+    <ul>
+        @foreach ($reservations as $reservation)
+            <li>
+                Reservation at {{ $reservation->reservation_time }} for {{ $reservation->number_of_guests }} guests - {{ $reservation->status }}
+            </li>
+        @endforeach
+    </ul>
 </div>
 @endsection

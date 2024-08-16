@@ -14,4 +14,8 @@ class Reservation extends Model
         'special_requests',
         'status'  // Now 'status' and 'user_id' are mass-assignable
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

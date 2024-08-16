@@ -78,5 +78,17 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 });
+use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
+
+// Assuming you have an existing admin group
+Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
+    Route::get('/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations.index');
+    // Other admin routes...
+});
+Route::prefix('admin')->middleware('is_admin')->group(function () {
+    Route::get('/reservations', [App\Http\Controllers\Admin\ReservationController::class, 'index'])->name('admin.reservations.index');
+    // Other admin reservation routes
+});
+
 
 require __DIR__.'/auth.php';
