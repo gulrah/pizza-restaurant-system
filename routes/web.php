@@ -8,16 +8,15 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
+use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+| Here is where you can register web routes for your application.
+|--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
@@ -33,6 +32,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
 });
 
 // Publicly Accessible Menu Viewing
@@ -50,21 +51,13 @@ Route::get('checkout/success', function () {
 Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
 Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-// Web.php
-Route::middleware(['auth'])->group(function () {
-    Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
-});
-
+Route::get('/reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
+Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
 // Admin Specific Routes
 Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::prefix('admin')->middleware('is_admin')->group(function () {
-        Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
-        Route::get('/orders/{id}', [OrderController::class, 'show'])->name('admin.orders.show');
-        // Other admin routes...
-    });
-    
 
     // Admin Menu Management
     Route::get('menu/create', [AdminMenuController::class, 'create'])->name('menu.create');
@@ -77,17 +70,25 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-});
-use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 
-// Assuming you have an existing admin group
-Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
+    // Admin Reservation Management
     Route::get('/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations.index');
-    // Other admin routes...
 });
 Route::prefix('admin')->middleware('is_admin')->group(function () {
     Route::get('/reservations', [App\Http\Controllers\Admin\ReservationController::class, 'index'])->name('admin.reservations.index');
     // Other admin reservation routes
+});
+Route::prefix('admin')->middleware('is_admin')->group(function () {
+    Route::get('/reservations/{reservation}/edit', [App\Http\Controllers\Admin\ReservationController::class, 'edit'])->name('admin.reservations.edit');
+    Route::put('/reservations/{reservation}', [App\Http\Controllers\Admin\ReservationController::class, 'update'])->name('admin.reservations.update');
+    Route::delete('/reservations/{reservation}', [App\Http\Controllers\Admin\ReservationController::class, 'destroy'])->name('admin.reservations.destroy');
+});
+
+// Protected routes for authenticated users
+Route::middleware(['auth'])->group(function () {
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 });
 
 
