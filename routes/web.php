@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +22,7 @@ use App\Http\Controllers\Admin\ReservationController as AdminReservationControll
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Authentication Protected Routes
@@ -33,7 +35,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/orders', [OrderController::class, 'userOrders'])->name('user.orders');
+    // User-specific reservation routes
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 });
 
 // Publicly Accessible Menu Viewing
@@ -47,49 +52,30 @@ Route::get('checkout/success', function () {
     return view('checkout.success');
 })->name('checkout.success');
 
-// Reservation Routes
-Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
-Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-Route::get('/reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
-Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
-Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
-
 // Admin Specific Routes
 Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Admin Menu Management
-    Route::get('menu/create', [AdminMenuController::class, 'create'])->name('menu.create');
-    Route::post('menu', [AdminMenuController::class, 'store'])->name('menu.store');
-    Route::get('menu', [AdminMenuController::class, 'index'])->name('menu.index');
+    Route::resource('menu', AdminMenuController::class);
 
     // Admin Order Management
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
-    Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::resource('orders', OrderController::class);
 
     // Admin Reservation Management
-    Route::get('/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations.index');
-});
-Route::prefix('admin')->middleware('is_admin')->group(function () {
-    Route::get('/reservations', [App\Http\Controllers\Admin\ReservationController::class, 'index'])->name('admin.reservations.index');
-    // Other admin reservation routes
-});
-Route::prefix('admin')->middleware('is_admin')->group(function () {
-    Route::get('/reservations/{reservation}/edit', [App\Http\Controllers\Admin\ReservationController::class, 'edit'])->name('admin.reservations.edit');
-    Route::put('/reservations/{reservation}', [App\Http\Controllers\Admin\ReservationController::class, 'update'])->name('admin.reservations.update');
-    Route::delete('/reservations/{reservation}', [App\Http\Controllers\Admin\ReservationController::class, 'destroy'])->name('admin.reservations.destroy');
+    Route::resource('reservations', AdminReservationController::class);
+
+    // Admin Blog Management
+    Route::resource('blogs', AdminBlogController::class);
 });
 
-// Protected routes for authenticated users
-Route::middleware(['auth'])->group(function () {
-    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
-    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-});
+// Public routes for blogs
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+use App\Http\Controllers\PageController;
 
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+
+Route::get('/about', [PageController::class, 'about'])->name('about');
 
 require __DIR__.'/auth.php';
