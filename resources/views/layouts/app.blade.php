@@ -35,70 +35,74 @@
     <!-- Owl Carousel -->
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
     <!-- Custom Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
+<link rel="stylesheet" href="app.css"></head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand me-auto ms-lg-5" href="{{ url('/') }}">
-                <img src="/path/to/logo.png" alt="{{ config('app.name') }}" height="40">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/menu') }}">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/blogs') }}">Blogs</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/reservations') }}"><i class="fas fa-chair"></i> Book a Table</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/cart') }}"><i class="fas fa-shopping-cart"></i> Cart</a>
-                    </li>
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login/Register</a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Account
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
-                                <li><a class="dropdown-item" href="{{ route('logout') }}"
+    <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+    <div class="container-fluid">
+        <a href="{{ url('/') }}" class="navbar-brand">
+            <!-- You can replace the below h1 with an image if you prefer -->
+            <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>{{ config('app.name', 'Laravel') }}</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/about') }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/menu') }}">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/blogs') }}">Blogs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a href="{{ url('/reservations') }}" class="btn btn-primary me-3">Book A Table</a>
+                @guest
+                    <a class="btn btn-outline-primary" href="{{ route('login') }}">Login/Register</a>
+                @else
+                    <div class="nav-item dropdown">
+                        <a class="btn btn-outline-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                             document.getElementById('logout-form').submit();">
                                     Logout
-                                </a></li>
+                                </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
-                            </ul>
-                        </li>
-                    @endguest
-                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                @endguest
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+<!-- Navbar End -->
+
 
     <main class="py-4">
         @yield('content')
     </main>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></cript>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 @stack('scripts')
 </body>

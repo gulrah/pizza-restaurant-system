@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MenuController as AdminMenuController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +73,6 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
 // Public routes for blogs
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
-use App\Http\Controllers\PageController;
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
