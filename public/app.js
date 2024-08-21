@@ -124,3 +124,17 @@ Alpine.start();
     
 })(jQuery);
 
+public function index(Request $request)
+{
+    // Retrieve search query
+    $query = $request->get('search');
+    
+    // Retrieve menu items with search filtering
+    $menuItems = MenuItem::when($query, function ($queryBuilder) use ($query) {
+        $queryBuilder->where('name', 'like', "%{$query}%")
+                     ->orWhere('description', 'like', "%{$query}%");
+    })->get();
+
+    // Pass filtered menu items to the view
+    return view('menu.index', compact('menuItems'));
+}

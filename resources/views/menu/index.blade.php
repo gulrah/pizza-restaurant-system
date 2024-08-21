@@ -1,10 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+<div class="container">
     <h2 class="mb-3">Menu Items</h2>
+
+    <!-- Search Form Start -->
+    <form method="GET" action="{{ route('menu.index') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search menu items..." value="{{ request()->get('search') }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <!-- Search Form End -->
+
+    <!-- Menu Items Display -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach ($menuItems as $item)
+        @forelse ($menuItems as $item)
         <div class="col">
             <div class="card h-100">
                 @if ($item->image)
@@ -24,7 +35,11 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="col-12">
+            <p class="text-center">No menu items found.</p>
+        </div>
+        @endforelse
     </div>
 </div>
 @endsection

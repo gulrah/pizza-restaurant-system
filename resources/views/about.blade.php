@@ -2,76 +2,126 @@
 
 @section('content')
 <div class="container mt-5">
-    <h1>About Us</h1>
-    <p>Welcome to our About page. Here, you can learn more about our mission, vision, and the values that guide our company.</p>
-    <h2>Our Mission</h2>
-    <p>Our mission is to provide exceptional services and solutions that meet the diverse needs of our users and clients.</p>
+    <div class="text-center mb-5">
+        <h1 class="display-4">About Us</h1>
+        <p class="lead">Discover more about our mission, vision, and values that drive our company.</p>
+    </div>
 
-    <h2>Our Vision</h2>
-    <p>We strive to be the leading provider in our industry, recognized for innovative products and customer-centric services.</p>
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <h2 class="h3">Our Mission</h2>
+            <p class="text-muted">Our mission is to provide exceptional services and solutions that meet the diverse needs of our users and clients. We are committed to excellence in everything we do.</p>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="h3">Our Vision</h2>
+            <p class="text-muted">We strive to be the leading provider in our industry, recognized for innovative products and customer-centric services. Our goal is to set new standards and drive progress in our field.</p>
+        </div>
+    </div>
 
-    <h2>Our Values</h2>
-    <ul>
-        <li><strong>Integrity:</strong> We conduct our business with honesty and transparency.</li>
-        <li><strong>Innovation:</strong> We are committed to continuous improvement and innovation.</li>
-        <li><strong>Customer Focus:</strong> We prioritize the needs of our customers in all we do.</li>
-    </ul>
+    <div class="mb-4">
+        <h2 class="h3">Our Values</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="p-4 border rounded shadow-sm">
+                    <h4 class="h5">Integrity</h4>
+                    <p class="text-muted">We conduct our business with honesty and transparency, building trust through our actions.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="p-4 border rounded shadow-sm">
+                    <h4 class="h5">Innovation</h4>
+                    <p class="text-muted">We are committed to continuous improvement and innovation, embracing new ideas and technologies.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="p-4 border rounded shadow-sm">
+                    <h4 class="h5">Customer Focus</h4>
+                    <p class="text-muted">We prioritize the needs of our customers, striving to deliver exceptional experiences and solutions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Meet the Team</h2>
-    <p>Our team is made up of talented individuals passionate about delivering the best to our users.</p>
+    <div class="text-center mb-5">
+        <h2 class="h3">Meet the Team</h2>
+        <p class="text-muted">Our team is composed of skilled and passionate individuals dedicated to achieving our mission and vision.</p>
+    </div>
 
     <div class="row">
-        <!-- Example static team member -->
-        <div class="col-md-4 text-center">
-            <img src="/path/to/image.jpg" alt="Team Member Name" class="img-fluid rounded-circle">
-            <h3>John Doe</h3>
-            <p>CEO</p>
+        <!-- Example team member -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="text-center border rounded p-4 shadow-sm bg-white">
+                <img src="/path/to/image.jpg" alt="John Doe" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                <h4 class="h5 mb-2">John Doe</h4>
+                <p class="text-muted mb-0">CEO</p>
+                <p class="text-muted mt-2">John is the visionary behind our company, leading with a passion for excellence and innovation.</p>
+            </div>
         </div>
-        <!-- More team members can be added similarly -->
+        <!-- Example team member -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="text-center border rounded p-4 shadow-sm bg-white">
+                <img src="/path/to/image.jpg" alt="Jane Smith" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                <h4 class="h5 mb-2">Jane Smith</h4>
+                <p class="text-muted mb-0">CTO</p>
+                <p class="text-muted mt-2">Jane leads our technology department, ensuring we stay at the forefront of innovation and technology.</p>
+            </div>
+        </div>
+        <!-- Example team member -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="text-center border rounded p-4 shadow-sm bg-white">
+                <img src="/path/to/image.jpg" alt="Alice Johnson" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                <h4 class="h5 mb-2">Alice Johnson</h4>
+                <p class="text-muted mb-0">COO</p>
+                <p class="text-muted mt-2">Alice oversees our operations, ensuring smooth and efficient processes across all departments.</p>
+            </div>
+        </div>
+        <!-- Example team member -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="text-center border rounded p-4 shadow-sm bg-white">
+                <img src="/path/to/image.jpg" alt="Bob Brown" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                <h4 class="h5 mb-2">Bob Brown</h4>
+                <p class="text-muted mb-0">CMO</p>
+                <p class="text-muted mt-2">Bob drives our marketing strategy, helping to build our brand and engage with our audience effectively.</p>
+            </div>
+        </div>
     </div>
-            <!-- Service Start -->
-            <div class="container-xxl py-5">
-                <div class="container">
-                    <div class="row g-4">
-                        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="service-item rounded pt-3">
-                                <div class="p-4">
-                                    <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                                    <h5>Master Chefs</h5>
-                                    <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="service-item rounded pt-3">
-                                <div class="p-4">
-                                    <i class="fa fa-3x fa-utensils text-primary mb-4"></i>
-                                    <h5>Quality Food</h5>
-                                    <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="service-item rounded pt-3">
-                                <div class="p-4">
-                                    <i class="fa fa-3x fa-cart-plus text-primary mb-4"></i>
-                                    <h5>Online Order</h5>
-                                    <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                            <div class="service-item rounded pt-3">
-                                <div class="p-4">
-                                    <i class="fa fa-3x fa-headset text-primary mb-4"></i>
-                                    <h5>24/7 Service</h5>
-                                    <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
-                                </div>
-                            </div>
-                        </div>
+
+    <!-- Service Section Start -->
+    <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Services</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                        <i class="fa fa-3x fa-user-tie text-primary mb-3"></i>
+                        <h5 class="mb-3">Master Chefs</h5>
+                        <p class="text-muted">Our team of master chefs ensures the highest quality dishes with the finest ingredients.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                        <i class="fa fa-3x fa-utensils text-primary mb-3"></i>
+                        <h5 class="mb-3">Quality Food</h5>
+                        <p class="text-muted">Every dish served is of the highest quality, prepared with fresh and premium ingredients.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                        <i class="fa fa-3x fa-cart-plus text-primary mb-3"></i>
+                        <h5 class="mb-3">Online Order</h5>
+                        <p class="text-muted">Conveniently order your favorite dishes online and have them delivered straight to your doorstep.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 mb-4">
+                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                        <i class="fa fa-3x fa-headset text-primary mb-3"></i>
+                        <h5 class="mb-3">24/7 Service</h5>
+                        <p class="text-muted">Our support team is available around the clock to assist with any inquiries or concerns.</p>
                     </div>
                 </div>
             </div>
-            <!-- Service End -->
+        </div>
+    </div>
+    <!-- Service Section End -->
 </div>
 @endsection

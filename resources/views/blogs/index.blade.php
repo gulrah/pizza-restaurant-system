@@ -2,17 +2,22 @@
 
 @section('content')
 <div class="container">
-    <h1>Blog Posts</h1>
-    <ul>
+    <h2 class="mb-3">Blog Posts</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($blogs as $blog)
-            <li>
-                <h2><a href="{{ route('blogs.show', $blog) }}">{{ $blog->title }}</a></h2>
+        <div class="col">
+            <div class="card h-100">
                 @if($blog->image)
-                    <img src="{{ asset('storage/'.$blog->image) }}" alt="{{ $blog->title }}" style="width:100px; height:auto;">
+                <img src="{{ asset('storage/'.$blog->image) }}" class="card-img-top" alt="{{ $blog->title }}">
                 @endif
-                <p>{{ Str::limit($blog->content, 100) }} <a href="{{ route('blogs.show', $blog) }}">Read more...</a></p>
-            </li>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ route('blogs.show', $blog) }}">{{ $blog->title }}</a></h5>
+                    <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
+                    <a href="{{ route('blogs.show', $blog) }}" class="btn btn-primary">Read more...</a>
+                </div>
+            </div>
+        </div>
         @endforeach
-    </ul>
+    </div>
 </div>
 @endsection

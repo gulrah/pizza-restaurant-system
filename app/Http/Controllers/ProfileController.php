@@ -11,15 +11,23 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function index(): View
+    {
+        $user = Auth::user(); // Retrieve the authenticated user
+        return view('profile.index', ['user' => $user]);
+    }    
+
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+{
+    return view('profile.edit', [
+        'user' => $request->user(),
+    ]);
+}
+
+    
 
     /**
      * Update the user's profile information.
@@ -57,4 +65,17 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    public function orders(Request $request): View
+{
+    $orders = $request->user()->orders; // Assuming you have a relationship set up
+
+    return view('profile.orders', compact('orders'));
+}
+
+public function reservations(Request $request): View
+{
+    $reservations = $request->user()->reservations; // Assuming you have a relationship set up
+
+    return view('profile.reservations', compact('reservations'));
+}
 }

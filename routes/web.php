@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\ReservationController as AdminReservationControll
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\OrdersController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -77,5 +79,13 @@ Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show')
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 
 Route::get('/about', [PageController::class, 'about'])->name('about');
+
+Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
+Route::get('/profile/reservations', [ProfileController::class, 'reservations'])->name('profile.reservations');
 
 require __DIR__.'/auth.php';
