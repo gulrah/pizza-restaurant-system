@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <div class="text-center mb-5">
+
+<!-- About Us Section -->
+<div class="container-fluid mt-0" style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); background-size: cover; background-position: center; height: 400px; position: relative;">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100 text-white text-center" style="background-color: rgba(0, 0, 0, 0.5);">
         <h1 class="display-4">About Us</h1>
         <p class="lead">Discover more about our mission, vision, and values that drive our company.</p>
     </div>
+</div>
 
+<div class="container mt-5">
     <div class="row mb-4">
         <div class="col-lg-6">
             <h2 class="h3">Our Mission</h2>
@@ -42,6 +46,7 @@
         </div>
     </div>
 
+    <!-- Meet the Team Section -->
     <div class="text-center mb-5">
         <h2 class="h3">Meet the Team</h2>
         <p class="text-muted">Our team is composed of skilled and passionate individuals dedicated to achieving our mission and vision.</p>
@@ -85,43 +90,43 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Service Section Start -->
-    <div class="container-xxl py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Our Services</h2>
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6 mb-4">
-                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
-                        <i class="fa fa-3x fa-user-tie text-primary mb-3"></i>
-                        <h5 class="mb-3">Master Chefs</h5>
-                        <p class="text-muted">Our team of master chefs ensures the highest quality dishes with the finest ingredients.</p>
-                    </div>
+<!-- Service Section Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <h2 class="text-center mb-4 text-white">Our Services</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                    <i class="fa fa-3x fa-user-tie text-primary mb-3"></i>
+                    <h5 class="mb-3">Master Chefs</h5>
+                    <p class="text-muted">Our team of master chefs ensures the highest quality dishes with the finest ingredients.</p>
                 </div>
-                <div class="col-lg-3 col-sm-6 mb-4">
-                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
-                        <i class="fa fa-3x fa-utensils text-primary mb-3"></i>
-                        <h5 class="mb-3">Quality Food</h5>
-                        <p class="text-muted">Every dish served is of the highest quality, prepared with fresh and premium ingredients.</p>
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                    <i class="fa fa-3x fa-utensils text-primary mb-3"></i>
+                    <h5 class="mb-3">Quality Food</h5>
+                    <p class="text-muted">Every dish served is of the highest quality, prepared with fresh and premium ingredients.</p>
                 </div>
-                <div class="col-lg-3 col-sm-6 mb-4">
-                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
-                        <i class="fa fa-3x fa-cart-plus text-primary mb-3"></i>
-                        <h5 class="mb-3">Online Order</h5>
-                        <p class="text-muted">Conveniently order your favorite dishes online and have them delivered straight to your doorstep.</p>
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                    <i class="fa fa-3x fa-cart-plus text-primary mb-3"></i>
+                    <h5 class="mb-3">Online Order</h5>
+                    <p class="text-muted">Conveniently order your favorite dishes online and have them delivered straight to your doorstep.</p>
                 </div>
-                <div class="col-lg-3 col-sm-6 mb-4">
-                    <div class="service-item rounded bg-white shadow-sm p-4 text-center">
-                        <i class="fa fa-3x fa-headset text-primary mb-3"></i>
-                        <h5 class="mb-3">24/7 Service</h5>
-                        <p class="text-muted">Our support team is available around the clock to assist with any inquiries or concerns.</p>
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 mb-4">
+                <div class="service-item rounded bg-white shadow-sm p-4 text-center">
+                    <i class="fa fa-3x fa-headset text-primary mb-3"></i>
+                    <h5 class="mb-3">24/7 Service</h5>
+                    <p class="text-muted">Our support team is available around the clock to assist with any inquiries or concerns.</p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Service Section End -->
 </div>
+<!-- Service Section End -->
 @endsection
