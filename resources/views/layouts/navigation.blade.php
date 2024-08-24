@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('app')
 
-@section('content')
+@section('navbar')
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
     <div class="container-fluid">

@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container-fluid p-4">
     <h1 class="mb-4 text-center">Admin Dashboard</h1>
     <div class="row g-4">
+        <!-- Orders Card -->
         <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
                 <div class="card-body text-white">
@@ -13,6 +14,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- Orders Statistics Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #ff8c00 0%, #ffeb3b 100%);">
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Orders Statistics</h5>
+                    <h3 class="card-text">{{ $orderCount }}</h3>
+                    <p>Total Orders</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservations Card -->
         <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
                 <div class="card-body text-white">
@@ -22,6 +36,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- Reservations Statistics Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
+                <div class="card-body text-white">
+                    <h5 class="card-title">Reservations Statistics</h5>
+                    <h3 class="card-text">{{ $reservationCount }}</h3>
+                    <p>Total Reservations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Management Card -->
         <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
                 <div class="card-body text-white">
@@ -31,6 +58,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Blog Posts Card -->
         <div class="col-lg-3 col-md-6">
             <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
                 <div class="card-body text-white">
@@ -41,53 +70,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Optional: Include a chart or analytics snapshot -->
-    <div class="row mt-5">
-        <div class="col-lg-12">
-            <div class="card border-0 shadow-lg">
-                <div class="card-body">
-                    <h5 class="card-title">Sales Analytics</h5>
-                    <!-- Placeholder for chart -->
-                    <div id="salesChart" style="height: 350px;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    var options = {
-        series: [{
-            name: 'Sales',
-            data: [31, 40, 28, 51, 42, 109, 100]
-        }],
-        chart: {
-            type: 'area',
-            height: 350,
-            toolbar: {
-                show: true
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'smooth'
-        },
-        xaxis: {
-            type: 'datetime',
-            categories: ["2021-03-18T00:00:00.000Z", "2021-03-19T01:30:00.000Z", "2021-03-20T02:30:00.000Z", "2021-03-21T03:30:00.000Z", "2021-03-22T04:30:00.000Z", "2021-03-23T05:30:00.000Z", "2021-03-24T06:30:00.000Z"]
-        },
-        tooltip: {
-            x: {
-                format: 'dd/MM/yy HH:mm'
-            }
-        }
-    };
-
-    var chart = new ApexCharts(document.querySelector("#salesChart"), options);
-    chart.render();
-</script>
 @endsection

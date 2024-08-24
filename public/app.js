@@ -138,3 +138,66 @@ public function index(Request $request)
     // Pass filtered menu items to the view
     return view('menu.index', compact('menuItems'));
 }
+const container = document.querySelector('.container');
+const tables = document.querySelectorAll('.row .table:not(.occupied)');
+const count = document.getElementById('count');
+const total = document.getElementById('total');
+const tableSelect = document.getElementById('table-type');
+
+populateUI();
+let tablePrice = +tableSelect.value;
+
+// Save selected table type and price
+function setTableData(tableType, tablePrice) {
+    localStorage.setItem('selectedTableType', tableType);
+    localStorage.setItem('selectedTablePrice', tablePrice);
+}
+
+// Update total and count
+function updateSelectedCount() {
+    const selectedTables = document.querySelectorAll('.row .table.selected');
+
+    const tablesIndex = [...selectedTables].map((table) => [...tables].indexOf(table));
+
+    localStorage.setItem('selectedTables', JSON.stringify(tablesIndex));
+
+    const selectedTablesCount = selectedTables.length;
+
+    count.innerText = selectedTablesCount;
+    total.innerText = selectedTablesCount * tablePrice;
+}
+
+// Get data from localStorage and populate UI
+function populateUI() {
+    const selectedTables = JSON.parse(localStorage.getItem('selectedTables'));
+    if (selectedTables !== null && selectedTables.length > 0) {
+        tables.forEach((table, index) => {
+            if (selectedTables.indexOf(index) > -1) {
+                table.classList.add('selected');
+            }
+        });
+    }
+
+    const selectedTableType = localStorage.getItem('selectedTableType');
+    if (selectedTableType !== null) {
+        tableSelect.selectedIndex = selectedTableType;
+    }
+}
+
+// Table select event
+tableSelect.addEventListener('change', (e) => {
+    tablePrice = +e.target.value;
+    setTableData(e.target.selectedIndex, e.target.value);
+    updateSelectedCount();
+});
+
+// Table click event
+container.addEventListener('click', (e) => {
+    if (e.target.classList.contains('table') && !e.target.classList.contains('occupied')) {
+        e.target.classList.toggle('selected');
+        updateSelectedCount();
+    }
+});
+
+// Initial count and total
+updateSelectedCount();

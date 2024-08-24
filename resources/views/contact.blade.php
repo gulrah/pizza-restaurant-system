@@ -2,19 +2,14 @@
 
 @section('content')
 
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
-                <div class="container text-center my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Contact Us</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center text-uppercase">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<div class="container-xxl py-5 bg-dark hero-header mb-5" 
+     style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
+            background-size: cover; background-position: center; height: 50vh;">
+    <div class="container my-5 py-5 text-center">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Contact</h1>
+        <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+    </div>
+</div>
         <!-- Navbar & Hero End -->
 
 

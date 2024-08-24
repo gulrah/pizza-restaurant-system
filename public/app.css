@@ -485,3 +485,95 @@
     padding-right: 0;
     border-right: none;
 }
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Lato', 'sans-serif';
+}
+
+.reservation-container {
+    margin: 20px 0;
+}
+
+.reservation-container select {
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.table {
+    background-color: #444;
+    height: 40px;
+    width: 60px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.table.selected {
+    background-color: #6feaf6;
+}
+
+.table.occupied {
+    background-color: #ccc;
+}
+
+.showcase {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #777;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.showcase li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+}
+
+.showcase li small {
+    margin-left: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.screen {
+    background-color: #fff;
+    height: 70px;
+    width: 100%;
+    margin: 15px 0;
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.75);
+}
+
+p.text {
+    margin: 5px 0;
+}
+
+p.text span {
+    color: #6feaf6;
+}
