@@ -9,6 +9,9 @@
         <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
     </div>
 </div>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($blogs as $blog)
         <div class="col">
             <div class="card h-100">
@@ -16,7 +19,7 @@
                 <img src="{{ asset('storage/'.$blog->image) }}" class="card-img-top" alt="{{ $blog->title }}">
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{{ route('blogs.show', $blog) }}">{{ $blog->title }}</a></h5>
+                    <h5 class="card-title"><a href="{{ route('blogs.show', $blog) }}" class="text-decoration-none text-dark">{{ $blog->title }}</a></h5>
                     <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
                     <a href="{{ route('blogs.show', $blog) }}" class="btn btn-primary">Read more...</a>
                 </div>
