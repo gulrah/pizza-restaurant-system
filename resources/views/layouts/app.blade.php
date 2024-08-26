@@ -8,6 +8,7 @@
     <link href="img/favicon.ico" rel="icon">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <!-- Libraries Stylesheet -->
@@ -69,7 +70,7 @@
                             <i class="fas fa-shopping-cart"></i>
                         </a>
                         @guest
-                            <a class="btn btn-outline-primary" href="{{ route('login') }}">Login/Register</a>
+                            <a class="btn btn-outline-primary gul" href="{{ route('login') }}">Login/Register</a>
                         @else
                             <div class="nav-item dropdown">
                                 <a class="btn btn-outline-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -164,6 +165,9 @@
 
     <!-- Script Section -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybRroKX12A4WXaAO3B9TwG0k6FnE1k5j2crv7Kbh/lU60Rj1g" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-GLklJvOGUEt1EJ1J8PjBTLwW6M2pXtk70ztGJjP7BMkG7asUE0KI5fI2qOHWhgdz" crossorigin="anonymous"></script>
 </body>
 </html>

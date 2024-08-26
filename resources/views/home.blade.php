@@ -47,8 +47,9 @@
             </div>
         </div>
     </div>
-    <div class="custom-offers-section d-flex flex-wrap">
-        <div class="offer-card" style="flex: 1; margin-right: 15px;">
+    <div class="custom-offers-section d-flex flex-wrap" style="height: 100%;">
+        <!-- First div - 40% width -->
+        <div class="offer-card" style="flex: 0 0 45%; margin-right: 15px; margin-left: 15px;">
             <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                 <img src="https://transvelo.github.io/pizzeria/assets/images/banner-1.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
                 <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 64px; color: white;">
@@ -61,26 +62,97 @@
                 </div>
             </div>
         </div>
-        <div class="offer-card" style="flex: 1; margin-left: 15px;">
-            <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
-                <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 55px; color: white;">
-                    <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Free Delivery With</p>
-                    <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Pizza Of The Day</h2>
-                    <p class="font-weight-bold" style="font-size: 1.2rem;">Start At</p>
-                    <p style="font-size: 3rem; font-weight: 600;">$32</p>
-                    <p style="font-size: 1.2rem;">99</p>
+    
+        <!-- Second and Third div - 20% width each, stacked vertically -->
+        <div class="d-flex flex-column" style="flex: 0 0 50%; margin-left: 15px;">
+            <div class="offer-card" style="flex: 1; margin-bottom: 15px;">
+                <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
+                    <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                    <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 55px; color: white;">
+                        <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Free Delivery With</p>
+                        <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Pizza Of The Day</h2>
+                        <p class="font-weight-bold" style="font-size: 1.2rem;">Start At</p>
+                        <p style="font-size: 3rem; font-weight: 600;">$32</p>
+                        <p style="font-size: 1.2rem;">99</p>
+                    </div>
+                </div>
+            </div>
+            <div class="offer-card" style="flex: 1;">
+                <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
+                    <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                    <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: white;">
+                        <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In Delivery Food</h2>
+                        <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
+                            Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-white.svg" alt="" style="width: 16px;">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="offer-card" style="flex: 1; margin-left: 15px;">
-            <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
-                <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: white;">
-                    <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In Delivery Food</h2>
-                    <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
-                        Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-white.svg" alt="" style="width: 16px;">
-                    </a>
+    </div>
+    
+    <div class="container-xxl pt-5 pb-3">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Team Members</h5>
+                <h1 class="mb-5">Our Master Chefs</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                    <div class="team-item text-center rounded overflow-hidden">
+                        <div class="rounded-circle overflow-hidden m-4">
+                            <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <small>Designation</small>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                    <div class="team-item text-center rounded overflow-hidden">
+                        <div class="rounded-circle overflow-hidden m-4">
+                            <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <small>Designation</small>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                    <div class="team-item text-center rounded overflow-hidden">
+                        <div class="rounded-circle overflow-hidden m-4">
+                            <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <small>Designation</small>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <div class="team-item text-center rounded overflow-hidden">
+                        <div class="rounded-circle overflow-hidden m-4">
+                            <img class="img-fluid" src="img/team-4.jpg" alt="">
+                        </div>
+                        <h5 class="mb-0">Full Name</h5>
+                        <small>Designation</small>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5">
-    <div class="row mb-4">
-        <div class="col text-center">
-            <h1 class="display-4">Welcome to Your Dashboard</h1>
-            <p class="lead">Manage your account, view your orders, and explore new features.</p>
-        </div>
-    </div>
+    </div><div class="container-xxl py-5 bg-dark hero-header mb-5" 
+    style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
+           background-size: cover; background-position: center; height: 50vh;">
+   <div class="container my-5 py-5 text-center">
+       <h1 class="display-3 text-white mb-3 animated slideInDown">Welcome to Your Dashboard</h1>
+       <p class="text-white mb-4">Manage your account, view your orders, and explore new features.</p>
+   </div>
+</div>
 
     <div class="row">
         <!-- Orders Section -->
@@ -44,70 +45,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Carousel Section -->
-    <div class="row mt-5">
-        <div class="col-lg-12">
-            <div id="userDashboardCarousel" class="owl-carousel owl-theme">
-                <div class="item">
-                    <div class="card border-0 shadow rounded-lg">
-                        <img src="img/promotion1.jpg" class="card-img-top" alt="Promotion 1">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Special Offer</h5>
-                            <p class="card-text">Get 20% off on your next order!</p>
-                            {{-- <a href="{{ route('promo.details') }}" class="btn btn-primary btn-sm">Learn More</a> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card border-0 shadow rounded-lg">
-                        <img src="img/promotion2.jpg" class="card-img-top" alt="Promotion 2">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">New Menu Items</h5>
-                            <p class="card-text">Explore our latest additions to the menu.</p>
-                            <a href="{{ route('menu.index') }}" class="btn btn-primary btn-sm">Explore Menu</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card border-0 shadow rounded-lg">
-                        <img src="img/promotion3.jpg" class="card-img-top" alt="Promotion 3">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Loyalty Program</h5>
-                            <p class="card-text">Earn points and rewards with every purchase.</p>
-                            {{-- <a href="{{ route('loyalty.index') }}" class="btn btn-primary btn-sm">Join Now</a> --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@push('scripts')
-<script>
-    $(document).ready(function() {
-        $("#userDashboardCarousel").owlCarousel({
-            items: 3,
-            margin: 10,
-            loop: true,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 2
-                },
-                1000: {
-                    items: 3
-                }
-            }
-        });
-    });
-</script>
-@endpush
 @endsection

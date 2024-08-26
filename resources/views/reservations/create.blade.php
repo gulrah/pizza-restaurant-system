@@ -3,200 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Table Selection</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Advanced Restaurant Table Reservation</title>
     <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: 'Heebo', sans-serif;
-            color: #333;
-        }
-        .selection-area {
-            width: 85%;
-            max-width: 1200px;
-            margin: 50px auto;
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        .title {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #444;
-            letter-spacing: 1px;
-        }
-        .layout {
-            position: relative;
-            width: 100%;
-            height: 600px;
-            background: linear-gradient(135deg, #f9f9f9, #e8e8e8);
-            border-radius: 15px;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-        .window, .door {
-            position: absolute;
-            font-size: 1.5rem;
-            color: #888;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            padding: 10px 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .window {
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100px;
-            height: 60px;
-        }
-        .window.left {
-            left: 20px;
-        }
-        .window.right {
-            right: 20px;
-        }
-        .door {
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 60px;
-        }
-        .table-wrapper {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .table {
-            width: 100%;
+        body, html {
             height: 100%;
-            background: #f5f5f5;
-            border-radius: 10px;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+        }
+        #restaurantCanvas {
+            border: 5px solid #333;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #333;
             color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            background-size: cover;
-            background-position: center;
-        }
-        .table.selected {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background-color: #28a745;
-        }
-        .table-number {
-            z-index: 1;
-        }
-        .confirm-btn {
-            display: block;
-            margin: 40px auto;
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .confirm-btn:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
+            padding: 8px;
+            border-radius: 4px;
+            display: none;
+            font-size: 14px;
+            z-index: 1000;
+            white-space: nowrap;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <div class="container selection-area">
-        <h2 class="title">Select Your Table</h2>
-        <div class="layout">
-            <div class="window left">
-                <i class="fas fa-window-maximize"></i><br>Window
-            </div>
-            <div class="window right">
-                <i class="fas fa-window-maximize"></i><br>Window
-            </div>
-            <div class="door">
-                <i class="fas fa-door-open"></i><br>Door
-            </div>
-            <div class="table-wrapper" style="top: 130px; left: 150px;">
-                <div class="table" data-table="1" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #d35400;">
-                    <span class="table-number">1</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 130px; left: 300px;">
-                <div class="table" data-table="2" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #e67e22;">
-                    <span class="table-number">2</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 130px; left: 450px;">
-                <div class="table" data-table="3" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #f39c12;">
-                    <span class="table-number">3</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 250px; left: 150px;">
-                <div class="table" data-table="4" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #e74c3c;">
-                    <span class="table-number">4</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 250px; left: 300px;">
-                <div class="table" data-table="5" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #c0392b;">
-                    <span class="table-number">5</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 250px; left: 450px;">
-                <div class="table" data-table="6" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #d35400;">
-                    <span class="table-number">6</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 370px; left: 150px;">
-                <div class="table" data-table="7" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #2980b9;">
-                    <span class="table-number">7</span>
-                </div>
-            </div>
-            <div class="table-wrapper" style="top: 370px; left: 300px;">
-                <div class="table" data-table="8" style="background-image: url('https://via.placeholder.com/90x90'); background-color: #3498db;">
-                    <span class="table-number">8</span>
-                </div>
-            </div>
-        </div>
-        <button id="confirm-selection" class="btn confirm-btn">Confirm Selection</button>
-    </div>
-
+    <div id="tooltip" class="tooltip"></div>
+    <canvas id="restaurantCanvas" width="1200" height="800"></canvas>
     <script>
-        const tables = document.querySelectorAll('.table');
-        let selectedTable = null;
+        const canvas = document.getElementById('restaurantCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
 
-        tables.forEach(table => {
-            table.addEventListener('click', () => {
-                if (selectedTable) {
-                    selectedTable.classList.remove('selected');
+        // Function to draw a table with a realistic style
+        function drawTable(x, y, width, height, label, status) {
+            ctx.save();
+            ctx.translate(x + width / 2, y + height / 2);
+            ctx.rotate(-Math.PI / 6); // Angle for a slight 3D effect
+
+            // Draw table top
+            ctx.fillStyle = '#8B4513'; // Table top color
+            ctx.fillRect(-width / 2, -height / 2, width, height);
+            ctx.strokeStyle = '#5C3317'; // Table border color
+            ctx.lineWidth = 2;
+            ctx.strokeRect(-width / 2, -height / 2, width, height);
+
+            // Draw table legs
+            ctx.fillStyle = '#5C3317'; // Table leg color
+            const legWidth = 10;
+            const legHeight = height / 2;
+            ctx.fillRect(-width / 2, height / 2 - legHeight, legWidth, legHeight); // Left leg
+            ctx.fillRect(width / 2 - legWidth, height / 2 - legHeight, legWidth, legHeight); // Right leg
+
+            // Table label
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(label, 0, 0);
+
+            // Indicate table status
+            if (status === 'occupied') {
+                ctx.strokeStyle = '#FF6347'; // Red for occupied
+                ctx.lineWidth = 4;
+                ctx.strokeRect(-width / 2, -height / 2, width, height);
+            } else if (status === 'reserved') {
+                ctx.strokeStyle = '#FFD700'; // Gold for reserved
+                ctx.lineWidth = 4;
+                ctx.strokeRect(-width / 2, -height / 2, width, height);
+            }
+
+            ctx.restore();
+        }
+
+        // Function to draw a door with a realistic style
+        function drawDoor(x, y, width, height) {
+            ctx.fillStyle = '#654321'; // Door color
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = '#3E2723'; // Door border
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+
+            // Door knob
+            ctx.fillStyle = '#000';
+            ctx.beginPath();
+            ctx.arc(x + width - 10, y + height / 2, 8, 0, Math.PI * 2, true);
+            ctx.fill();
+        }
+
+        // Function to draw a window with a realistic style
+        function drawWindow(x, y, width, height) {
+            ctx.fillStyle = '#87CEEB'; // Window color
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = '#1E90FF'; // Window border
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+
+            // Window grid
+            ctx.strokeStyle = '#1E90FF';
+            ctx.beginPath();
+            ctx.moveTo(x + width / 2, y);
+            ctx.lineTo(x + width / 2, y + height);
+            ctx.moveTo(x, y + height / 2);
+            ctx.lineTo(x + width, y + height / 2);
+            ctx.stroke();
+        }
+
+        // Function to draw the complete layout with advanced graphics
+        function drawLayout() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the door
+            drawDoor(1150, 350, 50, 100);
+
+            // Draw the windows
+            drawWindow(50, 50, 150, 100);
+            drawWindow(1050, 50, 150, 100);
+
+            // Draw the tables
+            const tables = [
+                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1', status: 'available' },
+                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2', status: 'occupied' },
+                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3', status: 'available' },
+                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4', status: 'reserved' },
+                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5', status: 'available' },
+                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6', status: 'occupied' },
+                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7', status: 'available' },
+                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8', status: 'reserved' }
+            ];
+
+            tables.forEach(table => {
+                drawTable(table.x, table.y, table.width, table.height, table.label, table.status);
+            });
+        }
+
+        // Adding interactivity with advanced tooltip
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const tables = [
+                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1' },
+                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2' },
+                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3' },
+                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4' },
+                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5' },
+                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6' },
+                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7' },
+                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8' }
+            ];
+
+            let isHovering = false;
+            tables.forEach(table => {
+                if (x > table.x && x < table.x + table.width && y > table.y && y < table.y + table.height) {
+                    tooltip.textContent = `Table ${table.label}`;
+                    tooltip.style.left = `${event.clientX + 10}px`;
+                    tooltip.style.top = `${event.clientY + 10}px`;
+                    tooltip.style.display = 'block';
+                    isHovering = true;
                 }
-                table.classList.add('selected');
-                selectedTable = table;
+            });
+
+            if (!isHovering) {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const tables = [
+                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1' },
+                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2' },
+                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3' },
+                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4' },
+                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5' },
+                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6' },
+                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7' },
+                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8' }
+            ];
+
+            tables.forEach(table => {
+                if (x > table.x && x < table.x + table.width && y > table.y && y < table.y + table.height) {
+                    alert(`You selected Table ${table.label}!`);
+                    // Highlight selected table
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawLayout();
+                    drawTable(table.x, table.y, table.width, table.height, table.label, 'highlighted');
+                }
             });
         });
 
-        document.getElementById('confirm-selection').addEventListener('click', () => {
-            if (selectedTable) {
-                alert('You have selected table ' + selectedTable.dataset.table);
-            } else {
-                alert('Please select a table.');
-            }
-        });
+        drawLayout();
     </script>
 </body>
 </html>

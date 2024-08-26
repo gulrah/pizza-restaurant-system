@@ -9,10 +9,6 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orderCount = Order::count(); // Adjust as per your model and database structure
-        $reservationCount = Reservation::count(); // Adjust as per your model and database structure
-
-    return view('admin.dashboard', compact('orderCount', 'reservationCount'));
         $orders = Order::with('user')->get();
         return view('admin.orders.index', compact('orders'));
     }

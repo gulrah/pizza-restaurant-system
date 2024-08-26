@@ -3,72 +3,158 @@
 @section('content')
 <div class="container-fluid p-4">
     <h1 class="mb-4 text-center">Admin Dashboard</h1>
+
     <div class="row g-4">
-        <!-- Orders Card -->
+        <!-- Statistics Cards -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
+            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
                 <div class="card-body text-white">
-                    <h5 class="card-title">Orders</h5>
-                    <p>Manage all orders, including details and statuses.</p>
+                    <h5 class="card-title">Total Orders</h5>
+                    <h2 class="card-text">1,234</h2>
+                    <p class="card-text">Orders processed this month.</p>
                     <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-light btn-sm">View Orders</a>
                 </div>
             </div>
         </div>
 
-        <!-- Orders Statistics Card -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #ff8c00 0%, #ffeb3b 100%);">
-                <div class="card-body text-dark">
-                    <h5 class="card-title">Orders Statistics</h5>
-                    <h3 class="card-text">{{ $orderCount }}</h3>
-                    <p>Total Orders</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Reservations Card -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
+            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
                 <div class="card-body text-white">
-                    <h5 class="card-title">Reservations</h5>
-                    <p>View and manage all customer reservations.</p>
+                    <h5 class="card-title">Total Reservations</h5>
+                    <h2 class="card-text">567</h2>
+                    <p class="card-text">Reservations made this month.</p>
                     <a href="{{ route('admin.reservations.index') }}" class="btn btn-outline-light btn-sm">View Reservations</a>
                 </div>
             </div>
         </div>
 
-        <!-- Reservations Statistics Card -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
+            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
                 <div class="card-body text-white">
-                    <h5 class="card-title">Reservations Statistics</h5>
-                    <h3 class="card-text">{{ $reservationCount }}</h3>
-                    <p>Total Reservations</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu Management Card -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
-                <div class="card-body text-white">
-                    <h5 class="card-title">Menu Management</h5>
-                    <p>Add, delete or modify items in the menu.</p>
+                    <h5 class="card-title">Menu Items</h5>
+                    <h2 class="card-text">45</h2>
+                    <p class="card-text">Items listed in the menu.</p>
                     <a href="{{ route('admin.menu.index') }}" class="btn btn-outline-light btn-sm">Manage Menu</a>
                 </div>
             </div>
         </div>
 
-        <!-- Blog Posts Card -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow rounded-lg" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
+            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
                 <div class="card-body text-white">
-                    <h5 class="card-title">Blog Posts</h5>
-                    <p>Create and edit blog content to engage visitors.</p>
+                    <h5 class="card-title">Recent Blog Posts</h5>
+                    <h2 class="card-text">12</h2>
+                    <p class="card-text">Blog posts published this month.</p>
                     <a href="{{ route('admin.blogs.index') }}" class="btn btn-outline-light btn-sm">Manage Blogs</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row g-4 mt-4">
+        <!-- Recent Activities -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-lg">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Recent Activities</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Order #1234 completed by Admin at 3:15 PM</li>
+                        <li class="list-group-item">New reservation added for 4 people at 2:00 PM</li>
+                        <li class="list-group-item">Menu item 'Spaghetti' updated by Admin at 1:00 PM</li>
+                        <li class="list-group-item">Blog post 'New Summer Menu' published at 12:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- To-Do List -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg rounded-lg">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">To-Do List</h5>
+                    <button id="addTaskBtn" class="btn btn-light btn-sm">Add New Task</button>
+                </div>
+                <div class="card-body">
+                    <ul id="taskList" class="list-group">
+                        <!-- Example Tasks -->
+                        <li class="list-group-item d-flex align-items-center">
+                            <input type="checkbox" id="task1" class="form-check-input me-2">
+                            <label for="task1" class="form-check-label flex-grow-1">Update menu with new seasonal items</label>
+                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <input type="checkbox" id="task2" class="form-check-input me-2">
+                            <label for="task2" class="form-check-label flex-grow-1">Prepare marketing materials for new blog post</label>
+                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <input type="checkbox" id="task3" class="form-check-input me-2">
+                            <label for="task3" class="form-check-label flex-grow-1">Review and approve new reservation policies</label>
+                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <input type="checkbox" id="task4" class="form-check-input me-2">
+                            <label for="task4" class="form-check-label flex-grow-1">Schedule system maintenance</label>
+                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const taskList = document.getElementById('taskList');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+
+        addTaskBtn.addEventListener('click', function() {
+            const newTaskText = prompt('Enter the new task:');
+            if (newTaskText) {
+                const newTaskItem = document.createElement('li');
+                newTaskItem.classList.add('list-group-item', 'd-flex', 'align-items-center');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.classList.add('form-check-input', 'me-2');
+                checkbox.addEventListener('change', function() {
+                    newTaskItem.querySelector('label').classList.toggle('text-decoration-line-through');
+                });
+
+                const label = document.createElement('label');
+                label.classList.add('form-check-label', 'flex-grow-1');
+                label.textContent = newTaskText;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2', 'remove-task');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', function() {
+                    newTaskItem.remove();
+                });
+
+                newTaskItem.appendChild(checkbox);
+                newTaskItem.appendChild(label);
+                newTaskItem.appendChild(deleteBtn);
+
+                taskList.appendChild(newTaskItem);
+            }
+        });
+
+        document.querySelectorAll('.remove-task').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('li').remove();
+            });
+        });
+
+        document.querySelectorAll('.form-check-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                this.closest('li').querySelector('label').classList.toggle('text-decoration-line-through');
+            });
+        });
+    });
+</script>
+
 @endsection
