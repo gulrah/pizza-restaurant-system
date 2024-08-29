@@ -46,7 +46,7 @@
             </div>
         </div>
     @else
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-warning text-center" role="alert">
             User information could not be retrieved.
         </div>
     @endif

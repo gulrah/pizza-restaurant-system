@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MenuItem;
+use App\Models\Category; // Import Category model
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -18,9 +19,45 @@ class MenuController extends Controller
                   ->orWhere('description', 'like', "%{$search}%");
         }
 
+        // Check if a category is selected
+        if ($request->has('category') && $request->input('category') !== '') {
+            $categoryId = $request->input('category');
+            $query->where('category_id', $categoryId);
+        }
+
         // Get the menu items
         $menuItems = $query->get();
 
-        return view('menu.index', compact('menuItems'));
+        // Fetch all categories for the filter dropdown
+        $categories = Category::all();
+
+        return view('menu.index', compact('menuItems', 'categories'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id', // Ensure the category exists
+            'image' => 'nullable|image|max:2048' // Optional image upload
+        ]);
+
+        // Create a new menu item using the validated data
+        $menuItem = new MenuItem($request->only(['name', 'description', 'price', 'category_id', 'image']));
+
+        // Check if an image was uploaded and is valid
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Store the image in the public storage under 'menu_images' directory
+            $menuItem->image = $request->file('image')->store('menu_images', 'public');
+        }
+
+        // Save the new menu item to the database
+        $menuItem->save();
+
+        // Redirect to the menu index page with a success message
+        return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
     }
 }

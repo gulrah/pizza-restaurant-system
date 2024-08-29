@@ -7,8 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class MenuItem extends Model
 {
-    use HasFactory; // Enable if you are using factories for seeders
+    use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'image']; // Specify only the fields you want to allow for mass assignment.
-    // protected $guarded = []; // Uncomment this if you decide to use guarded instead of fillable.
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'category_id',
+        'image',
+    ];
+
+    // Define the relationship to Category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

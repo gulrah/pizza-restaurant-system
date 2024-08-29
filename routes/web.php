@@ -13,6 +13,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 /*
@@ -46,6 +47,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Publicly Accessible Menu Viewing
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+Route::get('guest', function () {
+    return view('guest');
+})->name('guest.page');
 
 // Cart Routes
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -70,6 +74,8 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
 
     // Admin Blog Management
     Route::resource('blogs', AdminBlogController::class);
+    // 
+    Route::resource('categories', CategoryController::class);
 });
 
 // Public routes for blogs

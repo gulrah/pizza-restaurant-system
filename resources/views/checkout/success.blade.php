@@ -10,43 +10,45 @@
     </div>
 </div>
 
-<div class="container my-5">
-    <div class="card shadow-sm p-4">
-        <h3 class="text-center mb-4">Thank you. Your order has been received.</h3>
-        <ul class="list-unstyled">
-            <li><strong>Order number:</strong> {{ $order->id }}</li>
-            <li><strong>Date:</strong> {{ $order->created_at->format('F j, Y') }}</li>
-            <li><strong>Total:</strong> ${{ number_format($order->total, 2) }}</li>
-            <li><strong>Email:</strong> {{ $order->email }}</li>
-        </ul>
-        <h4 class="mt-5">Order Details</h4>
-        <table class="table table-bordered mt-3">
-            <thead class="thead-light">
+<div class="container mt-4">
+    <h1>Payment Success</h1>
+    <p>Your payment was successfully processed. Thank you for your order!</p>
+
+    <h2>Order Summary</h2>
+    <div class="mb-4">
+        <h4>Customer Details</h4>
+        <p><strong>Email:</strong> {{ $order->email }}</p>
+        <p><strong>Address:</strong> {{ $order->address }}</p>
+    </div>
+
+    <div class="mb-4">
+        <h4>Order Details</h4>
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <th scope="col">Product</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Total</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order->items as $item)
-                <tr>
-                    <td>{{ $item->product_name }}</td>
-                    <td>{{ $item->quantity }}</td>
-                    <td>${{ number_format($item->total, 2) }}</td>
-                </tr>
+                @foreach ($cart as $id => $details)
+                    <tr>
+                        <td>{{ $details['name'] }}</td>
+                        <td>{{ $details['quantity'] }}</td>
+                        <td>${{ $details['price'] }}</td>
+                    </tr>
                 @endforeach
-            </tbody>
-            <tfoot>
                 <tr>
-                    <th scope="row">Total:</th>
-                    <td colspan="2">${{ number_format($order->total, 2) }}</td>
+                    <td colspan="2" class="text-right"><strong>Total</strong></td>
+                    <td><strong>${{ array_sum(array_map(function ($item) {
+                        return $item['price'] * $item['quantity'];
+                    }, $cart)) }}</strong></td>
                 </tr>
-            </tfoot>
+            </tbody>
         </table>
-
-        <h4 class="mt-5">Billing Address</h4>
-        <!-- Include billing address details here -->
     </div>
+
+    <a href="/" class="btn btn-primary">Return Home</a>
 </div>
 @endsection

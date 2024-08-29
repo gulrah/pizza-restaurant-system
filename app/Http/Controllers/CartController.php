@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MenuItem;
-use App\Models\Order;  // Import should be at the top, outside any class or method
+use App\Models\Order;
 
 class CartController extends Controller
 {
     public function add(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('guest.page'); // Redirect to guest page if not logged in
+        }
+
         $item = MenuItem::findOrFail($request->item_id);
         $cart = session()->get('cart', []);
 
@@ -35,23 +39,39 @@ class CartController extends Controller
     }
 
     public function checkout(Request $request)
-{
-    $cart = session('cart');
-    $total = array_sum(array_map(function ($item) {
-        return $item['price'] * $item['quantity'];
-    }, $cart));
+    {
+        if (!auth()->check()) {
+            return redirect()->route('guest.page'); // Redirect to guest page if not logged in
+        }
 
-    // Create order
-    $order = Order::create([
-        'user_id' => auth()->id(),
-        'total' => $total,
-        'status' => 'completed'  // Example status
-    ]);
+        $cart = session('cart');
+        
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+        }
 
-    // Clear cart
-    session()->forget('cart');
+        $total = array_sum(array_map(function ($item) {
+            return $item['price'] * $item['quantity'];
+        }, $cart));
 
-    // Redirect to a success page
-    return redirect()->route('checkout.success')->with('order_id', $order->id);
-}
+        $totalQuantity = array_sum(array_column($cart, 'quantity'));
+        $productNames = implode(', ', array_column($cart, 'name'));
+
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'total' => $total,
+            'status' => 'completed',
+            'quantity' => $totalQuantity,
+            'product_name' => $productNames,
+            'address' => auth()->user()->address,
+            'email' => auth()->user()->email,
+        ]);
+
+        session()->forget('cart');
+
+        return view('checkout.success', [
+            'order' => $order,
+            'cart' => $cart
+        ]);
+    }
 }

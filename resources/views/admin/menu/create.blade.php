@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -16,6 +16,17 @@
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
             <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+        </div>
+        <div class="mb-3">
+
+            <label for="category" class="form-label">Category</label>
+            <select class="form-control" id="category" name="category_id" required>
+                <option value="">Select a Category</option>
+                @foreach($categories as $category)
+                    <h1>{{$category->name}}</h1>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>

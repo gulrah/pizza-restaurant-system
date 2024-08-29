@@ -16,8 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('total', 10, 2);
             $table->string('status')->default('pending'); // e.g., pending, completed, cancelled
-            $table->string('product_name'); // Make sure this column exists
-            $table->integer('quantity'); // Make sure this column exists
+            $table->string('product_name')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('quantity')->default(1); // Or another default value if appropriate
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

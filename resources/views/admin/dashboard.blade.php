@@ -49,8 +49,21 @@
                 </div>
             </div>
         </div>
+
+        <!-- Categories Card -->
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
+                <div class="card-body text-white">
+                    <h5 class="card-title">Categories</h5>
+                    {{-- <h2 class="card-text">{{ $categoriesCount }}</h2> --}}
+                    <p class="card-text">Total categories available.</p>
+                    <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-light btn-sm">Manage Categories</a>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Remaining Dashboard Sections (Recent Activities, To-Do List, etc.) -->
     <div class="row g-4 mt-4">
         <!-- Recent Activities -->
         <div class="col-lg-6">

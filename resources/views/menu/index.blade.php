@@ -6,24 +6,24 @@
             background-size: cover; background-position: center; height: 50vh;">
     <div class="container my-5 py-5 text-center">
         <h1 class="display-3 text-white mb-3 animated slideInDown">Menu</h1>
-        <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+        
+        <!-- Search Form Start -->
+        <form method="GET" action="{{ route('menu.index') }}" class="d-inline-block w-75" id="searchForm">
+            <div class="input-group">
+                <input type="text" id="menuSearch" name="search" class="form-control" placeholder="Search menu items..." value="{{ request()->get('search') }}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
+        <!-- Search Form End -->
+        
     </div>
 </div>
 
-<!-- Search Form Start -->
-<form method="GET" action="{{ route('menu.index') }}" class="mb-4" id="searchForm">
-    <div class="input-group">
-        <input type="text" id="menuSearch" name="search" class="form-control" placeholder="Search menu items..." value="{{ request()->get('search') }}">
-        <button class="btn btn-primary" type="submit">Search</button>
-    </div>
-</form>
-<!-- Search Form End -->
-
 <!-- Menu Items Display -->
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-3 g-4 px-2"> <!-- Adjusted padding -->
     @forelse ($menuItems as $item)
     <div class="col menu-item" data-name="{{ $item->name }}">
-        <div class="card h-100">
+        <div class="card h-100" style="margin-left: 5px; margin-right: 5px;"> <!-- Reduced space -->
             @if ($item->image)
             <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
             @endif
