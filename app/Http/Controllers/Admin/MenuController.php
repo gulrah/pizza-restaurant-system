@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
 
+
 class MenuController extends Controller
 {
     public function create()
@@ -35,6 +36,7 @@ class MenuController extends Controller
 
         return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
     }
+    
 
     public function index(Request $request)
     {
@@ -52,4 +54,47 @@ class MenuController extends Controller
 
         return view('admin.menu.index', compact('menuItems', 'categories'));
     }
+    public function edit($id)
+{
+    $menuItem = MenuItem::findOrFail($id);
+    $categories = Category::all();
+
+    return view('admin.menu.edit', compact('menuItem', 'categories'));
+}
+
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price' => 'required|numeric|min:0',
+        'category_id' => 'nullable|exists:categories,id',
+        'image' => 'nullable|image|max:2048', // Max size 2MB
+    ]);
+
+    $menuItem = MenuItem::findOrFail($id);
+
+    $menuItem->name = $request->input('name');
+    $menuItem->description = $request->input('description');
+    $menuItem->price = $request->input('price');
+    $menuItem->category_id = $request->input('category_id');
+
+    if ($request->hasFile('image')) {
+        // Delete old image if exists
+        if ($menuItem->image) {
+            Storage::delete($menuItem->image);
+        }
+
+        // Store the new image
+        $path = $request->file('image')->store('menu_images', 'public');
+        $menuItem->image = $path;
+    }
+
+    $menuItem->save();
+
+    return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully.');
+}
+
+
 }

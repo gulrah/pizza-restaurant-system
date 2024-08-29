@@ -74,8 +74,10 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
 
     // Admin Blog Management
     Route::resource('blogs', AdminBlogController::class);
-    // 
+    //
     Route::resource('categories', CategoryController::class);
+    Route::resource('menu', AdminMenuController::class);
+
 });
 
 // Public routes for blogs
