@@ -17,5 +17,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Other model methods...
+    public function orderItems()
+{
+    return $this->hasMany(OrderItem::class);
+}
+
 }

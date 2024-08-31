@@ -20,12 +20,12 @@
 </div>
 
 <!-- Menu Items Display -->
-<div class="row row-cols-1 row-cols-md-3 g-4 px-2"> <!-- Adjusted padding -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
     @forelse ($menuItems as $item)
-    <div class="col menu-item" data-name="{{ $item->name }}">
-        <div class="card h-100" style="margin-left: 5px; margin-right: 5px;"> <!-- Reduced space -->
+    <div class="col">
+        <div class="card h-100">
             @if ($item->image)
-            <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
+            <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}" style="height: 200px; object-fit: cover;">
             @endif
             <div class="card-body">
                 <h5 class="card-title">{{ $item->name }}</h5>

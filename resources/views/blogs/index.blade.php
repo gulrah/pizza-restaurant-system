@@ -16,7 +16,7 @@
         <div class="col">
             <div class="card h-100">
                 @if($blog->image)
-                <img src="{{ asset('storage/'.$blog->image) }}" class="card-img-top" alt="{{ $blog->title }}">
+                <img src="{{ asset('storage/'.$blog->image) }}" class="card-img-top" alt="{{ $blog->title }}" style="height: 200px; object-fit: cover;">
                 @endif
                 <div class="card-body">
                     <h5 class="card-title"><a href="{{ route('blogs.show', $blog) }}" class="text-decoration-none text-dark">{{ $blog->title }}</a></h5>

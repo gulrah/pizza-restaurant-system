@@ -10,11 +10,11 @@
     </div>
 </div>
     @if (session('cart'))
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (session('cart') as $id => $details)
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('storage/' . $details['image']) }}" alt="{{ $details['name'] }}" class="card-img-top">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ asset('storage/' . $details['image']) }}" alt="{{ $details['name'] }}" class="card-img-top" style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $details['name'] }}</h5>
                             <p class="card-text">${{ $details['price'] }}</p>
@@ -30,5 +30,4 @@
     @else
         <p>Your cart is empty.</p>
     @endif
-</div>
 @endsection

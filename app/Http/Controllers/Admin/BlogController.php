@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Storage;
 class BlogController extends Controller
 {
     public function index()
-    {
-        $blogs = Blog::all();
-        return view('admin.blogs.index', compact('blogs'));
-    }
+{
+    $blogs = Blog::all(); // Or use a paginated query if you have a lot of posts
+    return view('admin.blogs.index', compact('blogs'));
+}
 
     public function create()
     {

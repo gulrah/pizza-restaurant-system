@@ -63,8 +63,8 @@ class CartController extends Controller
             'status' => 'completed',
             'quantity' => $totalQuantity,
             'product_name' => $productNames,
-            'address' => auth()->user()->address,
-            'email' => auth()->user()->email,
+            // 'address' => auth()->user()->address,
+            // 'email' => auth()->user()->email,
         ]);
 
         session()->forget('cart');

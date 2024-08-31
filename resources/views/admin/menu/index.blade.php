@@ -9,30 +9,42 @@
         <a href="{{ route('admin.menu.create') }}" class="btn btn-primary">Add New Item</a>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach ($menuItems as $item)
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    @if($item->image)
-                        <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top" alt="{{ $item->name }}">
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $item->name }}</h5>
-                        <p class="card-text">{{ $item->description }}</p>
-                        <p class="card-text"><strong>Category:</strong> {{ $item->category->name ?? 'Uncategorized' }}</p>
-                        <p class="card-text"><strong>Price:</strong> ${{ number_format($item->price, 2) }}</p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($menuItems as $item)
+                <tr>
+                    <td class="text-center">
+                        @if($item->image)
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                        @else
+                        <span class="text-muted">No Image</span>
+                        @endif
+                    </td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->category->name ?? 'Uncategorized' }}</td>
+                    <td>${{ number_format($item->price, 2) }}</td>
+                    <td class="text-center">
                         <a href="{{ route('admin.menu.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.menu.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <form action="{{ route('admin.menu.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this item?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

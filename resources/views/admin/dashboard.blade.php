@@ -7,57 +7,67 @@
     <div class="row g-4">
         <!-- Statistics Cards -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
-                <div class="card-body text-white">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Total Orders</h5>
-                    <h2 class="card-text">1,234</h2>
+                    <h2 class="card-text">{{ $totalOrders }}</h2>
                     <p class="card-text">Orders processed this month.</p>
-                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-light btn-sm">View Orders</a>
+                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Orders</a>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
-                <div class="card-body text-white">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Total Reservations</h5>
-                    <h2 class="card-text">567</h2>
+                    <h2 class="card-text">{{ $totalReservations }}</h2>
                     <p class="card-text">Reservations made this month.</p>
-                    <a href="{{ route('admin.reservations.index') }}" class="btn btn-outline-light btn-sm">View Reservations</a>
+                    <a href="{{ route('admin.reservations.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Reservations</a>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
-                <div class="card-body text-white">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Menu Items</h5>
-                    <h2 class="card-text">45</h2>
+                    <h2 class="card-text">{{ $totalMenuItems }}</h2>
                     <p class="card-text">Items listed in the menu.</p>
-                    <a href="{{ route('admin.menu.index') }}" class="btn btn-outline-light btn-sm">Manage Menu</a>
+                    <a href="{{ route('admin.menu.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Menu</a>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
-                <div class="card-body text-white">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #8e44ad 0%, #3498db 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
+                    <h5 class="card-title">Total Users</h5>
+                    <h2 class="card-text">{{ $totalUsers }}</h2>
+                    <p class="card-text">Registered users on the platform.</p>
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Users</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Recent Blog Posts</h5>
-                    <h2 class="card-text">12</h2>
+                    <h2 class="card-text">{{ $totalBlogs }}</h2>
                     <p class="card-text">Blog posts published this month.</p>
-                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-outline-light btn-sm">Manage Blogs</a>
+                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Blogs</a>
                 </div>
             </div>
         </div>
 
-        <!-- Categories Card -->
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-lg rounded-lg" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
-                <div class="card-body text-white">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Categories</h5>
-                    {{-- <h2 class="card-text">{{ $categoriesCount }}</h2> --}}
+                    <h2 class="card-text">{{ $totalCategories }}</h2>
                     <p class="card-text">Total categories available.</p>
-                    <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-light btn-sm">Manage Categories</a>
+                    <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Categories</a>
                 </div>
             </div>
         </div>
@@ -67,7 +77,7 @@
     <div class="row g-4 mt-4">
         <!-- Recent Activities -->
         <div class="col-lg-6">
-            <div class="card border-0 shadow-lg rounded-lg">
+            <div class="card border-0 shadow-sm rounded">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Recent Activities</h5>
                 </div>
@@ -84,7 +94,7 @@
 
         <!-- To-Do List -->
         <div class="col-lg-6">
-            <div class="card border-0 shadow-lg rounded-lg">
+            <div class="card border-0 shadow-sm rounded">
                 <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">To-Do List</h5>
                     <button id="addTaskBtn" class="btn btn-light btn-sm">Add New Task</button>
@@ -104,12 +114,7 @@
                         </li>
                         <li class="list-group-item d-flex align-items-center">
                             <input type="checkbox" id="task3" class="form-check-input me-2">
-                            <label for="task3" class="form-check-label flex-grow-1">Review and approve new reservation policies</label>
-                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center">
-                            <input type="checkbox" id="task4" class="form-check-input me-2">
-                            <label for="task4" class="form-check-label flex-grow-1">Schedule system maintenance</label>
+                            <label for="task3" class="form-check-label flex-grow-1">Review customer feedback for recent changes</label>
                             <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
                         </li>
                     </ul>
@@ -118,56 +123,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const taskList = document.getElementById('taskList');
-        const addTaskBtn = document.getElementById('addTaskBtn');
-
-        addTaskBtn.addEventListener('click', function() {
-            const newTaskText = prompt('Enter the new task:');
-            if (newTaskText) {
-                const newTaskItem = document.createElement('li');
-                newTaskItem.classList.add('list-group-item', 'd-flex', 'align-items-center');
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.classList.add('form-check-input', 'me-2');
-                checkbox.addEventListener('change', function() {
-                    newTaskItem.querySelector('label').classList.toggle('text-decoration-line-through');
-                });
-
-                const label = document.createElement('label');
-                label.classList.add('form-check-label', 'flex-grow-1');
-                label.textContent = newTaskText;
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'ms-2', 'remove-task');
-                deleteBtn.textContent = 'Delete';
-                deleteBtn.addEventListener('click', function() {
-                    newTaskItem.remove();
-                });
-
-                newTaskItem.appendChild(checkbox);
-                newTaskItem.appendChild(label);
-                newTaskItem.appendChild(deleteBtn);
-
-                taskList.appendChild(newTaskItem);
-            }
-        });
-
-        document.querySelectorAll('.remove-task').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.closest('li').remove();
-            });
-        });
-
-        document.querySelectorAll('.form-check-input').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                this.closest('li').querySelector('label').classList.toggle('text-decoration-line-through');
-            });
-        });
-    });
-</script>
-
 @endsection
