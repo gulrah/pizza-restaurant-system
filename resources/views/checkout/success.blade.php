@@ -7,6 +7,7 @@
     <div class="container my-5 py-5 text-center">
         <h1 class="display-3 text-white mb-3 animated slideInDown">Payment Success</h1>
         <a href="/" class="btn btn-primary">Return Home</a>
+        <a href="{{ route('orders.index') }}" class="btn btn-secondary">View Orders</a>
     </div>
 </div>
 
@@ -50,5 +51,6 @@
     </div>
 
     <a href="/" class="btn btn-primary">Return Home</a>
+    <a href="{{ route('orders.index') }}" class="btn btn-secondary">View Orders</a>
 </div>
 @endsection

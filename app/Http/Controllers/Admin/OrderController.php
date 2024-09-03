@@ -23,6 +23,4 @@ class OrderController extends Controller
         $orders = Order::where('user_id', auth()->id())->with('user')->get();
         return view('orders.index', compact('orders')); // Update the path here
     }
-
-    // Other controller methods...
 }

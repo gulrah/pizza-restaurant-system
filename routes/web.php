@@ -14,8 +14,6 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\UserController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +34,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/update', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+        Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
+        Route::get('/reservations', [ProfileController::class, 'reservations'])->name('reservations');
+    });
 
     // User-specific reservation routes
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
@@ -75,61 +78,20 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
 
     // Admin Blog Management
     Route::resource('blogs', AdminBlogController::class);
-    //
-    Route::resource('categories', CategoryController::class);
-    Route::resource('menu', AdminMenuController::class);
-
-});
-// Admin Specific Routes
-Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Admin Menu Management
-    Route::resource('menu', AdminMenuController::class);
-
-    // Admin Order Management
-    Route::resource('orders', OrderController::class);
-
-    // Admin Reservation Management
-    Route::resource('reservations', AdminReservationController::class);
-
-    // Admin Blog Management
-    Route::resource('blogs', AdminBlogController::class);
 
     // Admin Category Management
     Route::resource('categories', CategoryController::class);
-
-    // Admin User Management
-    Route::resource('users', UserController::class);
 });
-
 
 // Public routes for blogs
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
+// Static Pages
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-
 Route::get('/about', [PageController::class, 'about'])->name('about');
 
+// User Orders
 Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-Route::get('/profile/orders', [ProfileController::class, 'orders'])->name('profile.orders');
-Route::get('/profile/reservations', [ProfileController::class, 'reservations'])->name('profile.reservations');
-Route::post('/order-items', [OrdersController::class, 'storeOrderItem'])->name('order-items.store');
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
-Route::get('/admin/users/{user}', [UserController::class, 'show'])->name('admin.users.show');
-Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
-Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('users', UserController::class)->except(['create', 'store', 'destroy']);
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
-});
 
 require __DIR__.'/auth.php';

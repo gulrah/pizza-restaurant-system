@@ -1,5 +1,3 @@
-<!-- resources/views/orders/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -24,7 +22,6 @@
                     <tr>
                         <th>Order ID</th>
                         <th>Products</th>
-                        <th>Quantity</th>
                         <th>Total Cost</th>
                         <th>Date</th>
                         <th>Status</th>
@@ -32,23 +29,23 @@
                 </thead>
                 <tbody>
                     @forelse($orders as $order)
-                        @foreach($order->orderItems as $item)
-                            <tr>
-                                <td>{{ $order->id ?? 'N/A' }}</td>
-                                <td>{{ $item->product_name ?? 'N/A' }}</td>
-                                <td>{{ $item->quantity ?? 'N/A' }}</td>
-                                <td>${{ number_format($item->price * $item->quantity, 2) }}</td>
-                                <td>{{ $order->created_at->format('Y-m-d') ?? 'N/A' }}</td>
-                                <td>
-                                    <span class="badge {{ $order->status == 'Completed' ? 'bg-success' : 'bg-warning' }}">
-                                        {{ $order->status }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>
+                                {{$order->product_name }} x {{ $order->quantity }}<br>
+                               
+                            </td>
+                            <td>${{ number_format($order->total, 2) }}</td>
+                            <td>{{ $order->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <span class="badge {{ $order->status == 'completed' ? 'bg-success' : 'bg-warning' }}">
+                                    {{ ucfirst($order->status) }}
+                                </span>
+                            </td>
+                        </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">No orders found</td>
+                            <td colspan="5" class="text-center">No orders found</td>
                         </tr>
                     @endforelse
                 </tbody>

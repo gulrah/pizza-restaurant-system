@@ -1,209 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Restaurant Table Reservation</title>
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f5f5f5;
-            font-family: 'Arial', sans-serif;
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h2>Book a Table</h2>
+
+    <!-- Step 1: Date and Number of People Selection -->
+    <div id="step1">
+        <form id="date-person-form">
+            <div class="mb-3">
+                <label for="reservation_date" class="form-label">Select Date</label>
+                <input type="date" class="form-control" id="reservation_date" name="reservation_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="reservation_time" class="form-label">Select Time</label>
+                <input type="time" class="form-control" id="reservation_time" name="reservation_time" required>
+            </div>
+            <div class="mb-3">
+                <label for="number_of_guests" class="form-label">Number of Guests</label>
+                <input type="number" class="form-control" id="number_of_guests" name="number_of_guests" min="1" required>
+            </div>
+            <button type="button" class="btn btn-primary" id="check-availability">Check Availability</button>
+        </form>
+    </div>
+
+    <!-- Step 2: Table Selection (hidden until date and number of people are selected) -->
+    <div id="step2" style="display: none;">
+        <h3>Available Tables</h3>
+        <div id="table-map" class="d-flex flex-wrap" style="gap: 20px;">
+            <!-- Tables will be dynamically loaded here based on the selected date, time, and number of people -->
+        </div>
+        <button type="button" class="btn btn-secondary" id="go-back">Go Back</button>
+        <form action="{{ route('reservations.store') }}" method="POST" id="reservation-form">
+            @csrf
+            <input type="hidden" id="selected_table" name="selected_table">
+            <input type="hidden" id="final_reservation_date" name="reservation_date">
+            <input type="hidden" id="final_reservation_time" name="reservation_time">
+            <input type="hidden" id="final_number_of_guests" name="number_of_guests">
+            <div class="mb-3">
+                <label for="special_requests" class="form-label">Special Requests (Optional)</label>
+                <textarea class="form-control" id="special_requests" name="special_requests"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Book Now</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('check-availability').addEventListener('click', function () {
+        const date = document.getElementById('reservation_date').value;
+        const time = document.getElementById('reservation_time').value;
+        const guests = document.getElementById('number_of_guests').value;
+
+        if (date && time && guests) {
+            // Save date, time, and number of guests for submission
+            document.getElementById('final_reservation_date').value = date;
+            document.getElementById('final_reservation_time').value = time;
+            document.getElementById('final_number_of_guests').value = guests;
+
+            // Simulate an AJAX call to check table availability (replace with actual AJAX call)
+            loadAvailableTables(date, time, guests);
+
+            // Show Step 2
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        } else {
+            alert('Please select a date, time, and number of guests.');
         }
-        #restaurantCanvas {
-            border: 5px solid #333;
-            background-color: #fff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-        .tooltip {
-            position: absolute;
-            background-color: #333;
-            color: #fff;
-            padding: 8px;
-            border-radius: 4px;
-            display: none;
-            font-size: 14px;
-            z-index: 1000;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-    </style>
-</head>
-<body>
-    <div id="tooltip" class="tooltip"></div>
-    <canvas id="restaurantCanvas" width="1200" height="800"></canvas>
-    <script>
-        const canvas = document.getElementById('restaurantCanvas');
-        const ctx = canvas.getContext('2d');
-        const tooltip = document.getElementById('tooltip');
+    });
 
-        // Function to draw a table with a realistic style
-        function drawTable(x, y, width, height, label, status) {
-            ctx.save();
-            ctx.translate(x + width / 2, y + height / 2);
-            ctx.rotate(-Math.PI / 6); // Angle for a slight 3D effect
+    document.getElementById('go-back').addEventListener('click', function () {
+        // Go back to Step 1
+        document.getElementById('step1').style.display = 'block';
+        document.getElementById('step2').style.display = 'none';
+    });
 
-            // Draw table top
-            ctx.fillStyle = '#8B4513'; // Table top color
-            ctx.fillRect(-width / 2, -height / 2, width, height);
-            ctx.strokeStyle = '#5C3317'; // Table border color
-            ctx.lineWidth = 2;
-            ctx.strokeRect(-width / 2, -height / 2, width, height);
+    function loadAvailableTables(date, time, guests) {
+        const tableMap = document.getElementById('table-map');
+        tableMap.innerHTML = ''; // Clear previous tables
 
-            // Draw table legs
-            ctx.fillStyle = '#5C3317'; // Table leg color
-            const legWidth = 10;
-            const legHeight = height / 2;
-            ctx.fillRect(-width / 2, height / 2 - legHeight, legWidth, legHeight); // Left leg
-            ctx.fillRect(width / 2 - legWidth, height / 2 - legHeight, legWidth, legHeight); // Right leg
+        // Example tables (replace with data from the server)
+        const tables = [
+            { id: 1, available: true },
+            { id: 2, available: false },
+            { id: 3, available: true },
+            { id: 4, available: false }
+        ];
 
-            // Table label
-            ctx.fillStyle = '#fff';
-            ctx.font = '14px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(label, 0, 0);
+        tables.forEach(table => {
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'table';
+            tableDiv.dataset.id = table.id;
+            tableDiv.style.cursor = table.available ? 'pointer' : 'not-allowed';
+            tableDiv.style.textAlign = 'center';
+            tableDiv.style.opacity = table.available ? '1' : '0.5'; // Fade unavailable tables
+            tableDiv.innerHTML = `
+                <i class="fas fa-utensils fa-3x ${table.available ? 'available' : 'unavailable'}" style="color: ${table.available ? '#28a745' : '#dc3545'};"></i>
+                <div>Table ${table.id}</div>
+            `;
+            tableMap.appendChild(tableDiv);
 
-            // Indicate table status
-            if (status === 'occupied') {
-                ctx.strokeStyle = '#FF6347'; // Red for occupied
-                ctx.lineWidth = 4;
-                ctx.strokeRect(-width / 2, -height / 2, width, height);
-            } else if (status === 'reserved') {
-                ctx.strokeStyle = '#FFD700'; // Gold for reserved
-                ctx.lineWidth = 4;
-                ctx.strokeRect(-width / 2, -height / 2, width, height);
-            }
-
-            ctx.restore();
-        }
-
-        // Function to draw a door with a realistic style
-        function drawDoor(x, y, width, height) {
-            ctx.fillStyle = '#654321'; // Door color
-            ctx.fillRect(x, y, width, height);
-            ctx.strokeStyle = '#3E2723'; // Door border
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, width, height);
-
-            // Door knob
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.arc(x + width - 10, y + height / 2, 8, 0, Math.PI * 2, true);
-            ctx.fill();
-        }
-
-        // Function to draw a window with a realistic style
-        function drawWindow(x, y, width, height) {
-            ctx.fillStyle = '#87CEEB'; // Window color
-            ctx.fillRect(x, y, width, height);
-            ctx.strokeStyle = '#1E90FF'; // Window border
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, width, height);
-
-            // Window grid
-            ctx.strokeStyle = '#1E90FF';
-            ctx.beginPath();
-            ctx.moveTo(x + width / 2, y);
-            ctx.lineTo(x + width / 2, y + height);
-            ctx.moveTo(x, y + height / 2);
-            ctx.lineTo(x + width, y + height / 2);
-            ctx.stroke();
-        }
-
-        // Function to draw the complete layout with advanced graphics
-        function drawLayout() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the door
-            drawDoor(1150, 350, 50, 100);
-
-            // Draw the windows
-            drawWindow(50, 50, 150, 100);
-            drawWindow(1050, 50, 150, 100);
-
-            // Draw the tables
-            const tables = [
-                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1', status: 'available' },
-                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2', status: 'occupied' },
-                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3', status: 'available' },
-                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4', status: 'reserved' },
-                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5', status: 'available' },
-                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6', status: 'occupied' },
-                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7', status: 'available' },
-                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8', status: 'reserved' }
-            ];
-
-            tables.forEach(table => {
-                drawTable(table.x, table.y, table.width, table.height, table.label, table.status);
-            });
-        }
-
-        // Adding interactivity with advanced tooltip
-        canvas.addEventListener('mousemove', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            const tables = [
-                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1' },
-                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2' },
-                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3' },
-                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4' },
-                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5' },
-                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6' },
-                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7' },
-                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8' }
-            ];
-
-            let isHovering = false;
-            tables.forEach(table => {
-                if (x > table.x && x < table.x + table.width && y > table.y && y < table.y + table.height) {
-                    tooltip.textContent = `Table ${table.label}`;
-                    tooltip.style.left = `${event.clientX + 10}px`;
-                    tooltip.style.top = `${event.clientY + 10}px`;
-                    tooltip.style.display = 'block';
-                    isHovering = true;
-                }
-            });
-
-            if (!isHovering) {
-                tooltip.style.display = 'none';
+            if (table.available) {
+                tableDiv.addEventListener('click', function () {
+                    document.getElementById('selected_table').value = table.id;
+                    Array.from(document.querySelectorAll('.table .fa-utensils')).forEach(icon => icon.style.border = 'none');
+                    this.querySelector('.fa-utensils').style.border = '3px solid #007bff'; // Highlight selected table
+                });
             }
         });
+    }
+</script>
 
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+<!-- Include Font Awesome CDN or install via npm/yarn -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-            const tables = [
-                { x: 200, y: 100, width: 150, height: 100, label: 'Table 1' },
-                { x: 400, y: 100, width: 150, height: 100, label: 'Table 2' },
-                { x: 600, y: 100, width: 150, height: 100, label: 'Table 3' },
-                { x: 800, y: 100, width: 150, height: 100, label: 'Table 4' },
-                { x: 200, y: 250, width: 150, height: 100, label: 'Table 5' },
-                { x: 400, y: 250, width: 150, height: 100, label: 'Table 6' },
-                { x: 600, y: 250, width: 150, height: 100, label: 'Table 7' },
-                { x: 800, y: 250, width: 150, height: 100, label: 'Table 8' }
-            ];
+<style>
+    .fa-utensils {
+        transition: transform 0.3s, color 0.3s;
+    }
 
-            tables.forEach(table => {
-                if (x > table.x && x < table.x + table.width && y > table.y && y < table.y + table.height) {
-                    alert(`You selected Table ${table.label}!`);
-                    // Highlight selected table
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    drawLayout();
-                    drawTable(table.x, table.y, table.width, table.height, table.label, 'highlighted');
-                }
-            });
-        });
+    .fa-utensils.available:hover {
+        transform: scale(1.1);
+        color: #218838; /* Darker green on hover */
+    }
 
-        drawLayout();
-    </script>
-</body>
-</html>
+    .fa-utensils.unavailable {
+        cursor: not-allowed;
+    }
+</style>
+@endsection
