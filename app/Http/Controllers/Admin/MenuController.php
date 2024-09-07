@@ -96,5 +96,4 @@ public function update(Request $request, $id)
     return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully.');
 }
 
-
 }

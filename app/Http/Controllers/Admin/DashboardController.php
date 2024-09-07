@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\MenuItem;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\TeamMember;
 
 class DashboardController extends Controller
 {
@@ -20,10 +21,12 @@ class DashboardController extends Controller
         $totalMenuItems = MenuItem::count();
         $totalBlogs = Blog::count();
         $totalCategories = Category::count();
+        $totalTeamMembers = TeamMember::count();
 
         return view('admin.dashboard', compact(
             'totalOrders', 'totalReservations', 'totalUsers', 
-            'totalMenuItems', 'totalBlogs', 'totalCategories'
+            'totalMenuItems', 'totalBlogs', 'totalCategories',
+            'totalTeamMembers',
         ));
     }
 }

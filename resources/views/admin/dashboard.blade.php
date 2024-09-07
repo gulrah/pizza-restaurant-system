@@ -73,6 +73,17 @@
         </div>
     </div>
 
+    <div class="col-lg-3 col-md-6">
+        <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
+            <div class="card-body text-white d-flex flex-column align-items-start">
+                <h5 class="card-title">Team Members</h5>
+                <h2 class="card-text">{{ $totalTeamMembers }}</h2>
+                <p class="card-text">See Team Members.</p>
+                <a href="{{ route('admin.team.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Team Members</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Remaining Dashboard Sections (Recent Activities, To-Do List, etc.) -->
     <div class="row g-4 mt-4">
         <!-- Recent Activities -->

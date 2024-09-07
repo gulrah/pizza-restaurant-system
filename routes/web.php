@@ -14,84 +14,61 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\ContactController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application.
-|--------------------------------------------------------------------------
-*/
+// Home Route
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('home');
+// Publicly Accessible Pages
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+
+// Contact Form Submission
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Admin Messages (viewable by admin only)
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/messages', [ContactController::class, 'index'])->name('messages');
 });
 
-// Authentication Protected Routes
+// Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])->name('index');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
-        Route::patch('/update', [ProfileController::class, 'update'])->name('update');
-        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
-        Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
-        Route::get('/reservations', [ProfileController::class, 'reservations'])->name('reservations');
-    });
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // User-specific reservation routes
-    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-    Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
-    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::resource('reservations', ReservationController::class)->except(['show']);
 });
-
-// Publicly Accessible Menu Viewing
-Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-Route::get('guest', function () {
-    return view('guest');
-})->name('guest.page');
 
 // Cart Routes
-Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-Route::get('checkout/success', function () {
-    return view('checkout.success');
-})->name('checkout.success');
+Route::resource('cart', CartController::class);
 
-// Admin Specific Routes
+// Admin Routes with is_admin Middleware
 Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Admin Menu Management
-    Route::resource('menu', AdminMenuController::class);
-
-    // Admin Order Management
-    Route::resource('orders', OrderController::class);
-
-    // Admin Reservation Management
-    Route::resource('reservations', AdminReservationController::class);
-
-    // Admin Blog Management
-    Route::resource('blogs', AdminBlogController::class);
-
-    // Admin Category Management
-    Route::resource('categories', CategoryController::class);
+    
+    // Admin Resources
+    Route::resources([
+        'menu' => AdminMenuController::class,
+        'orders' => OrderController::class,
+        'reservations' => AdminReservationController::class,
+        'blogs' => AdminBlogController::class,
+        'categories' => CategoryController::class,
+        'users' => UserController::class,
+        'team' => TeamMemberController::class
+    ]);
 });
 
-// Public routes for blogs
-Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
-
-// Static Pages
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/about', [PageController::class, 'about'])->name('about');
-
-// User Orders
-Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
-
+// Authentication routes
 require __DIR__.'/auth.php';
