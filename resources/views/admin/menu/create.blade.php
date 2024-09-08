@@ -18,12 +18,14 @@
             <input type="number" step="0.01" class="form-control" id="price" name="price" required>
         </div>
         <div class="mb-3">
-
+            <label for="discount_percentage" class="form-label">Discount Percentage</label>
+            <input type="number" step="0.01" min="0" max="100" class="form-control" id="discount_percentage" name="discount_percentage" placeholder="Enter discount percentage (optional)">
+        </div>
+        <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <select class="form-control" id="category" name="category_id" required>
                 <option value="">Select a Category</option>
                 @foreach($categories as $category)
-                    <h1>{{$category->name}}</h1>
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>

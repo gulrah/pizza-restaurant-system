@@ -83,61 +83,67 @@ class CartController extends Controller
 
     // Process payment and create order
     public function processPayment(Request $request)
-{
-    $request->validate([
-        'card_number' => 'required|digits:16',
-        'expiry_date' => 'required|date_format:m/y',
-        'cvv' => 'required|digits:3',
-    ]);
-
-    $cart = session('cart');
-    if (!$cart) {
-        return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
-    }
-
-    // Get user details
-    $user = auth()->user();
-
-    // Calculate total and apply discount
-    $total = array_sum(array_map(function ($item) {
-        $discountedPrice = $item['price'] - ($item['price'] * ($item['discount_percentage'] / 100));
-        return $discountedPrice * $item['quantity'];
-    }, $cart));
-
-    $totalQuantity = array_sum(array_column($cart, 'quantity'));
-    $productNames = implode(', ', array_column($cart, 'name'));
-
-    // Create a new order
-    $order = Order::create([
-        'user_id' => $user->id,
-        'total' => $total,
-        'status' => 'completed',
-        'quantity' => $totalQuantity,
-        'product_name' => $productNames,
-        'address' => $request->input('address'), // Assuming the address comes from the form
-        'email' => $user->email
-    ]);
-
-    // Save each item in the order
-    foreach ($cart as $id => $details) {
-        OrderItem::create([
-            'order_id' => $order->id,
-            'menu_item_id' => $id,
-            'quantity' => $details['quantity'],
+    {
+        $request->validate([
+            'card_number' => 'required|digits:16',
+            'expiry_date' => 'required|date_format:m/y',
+            'cvv' => 'required|digits:3',
+            'address' => 'required|string|max:255',
+            'special_requests' => 'nullable|string|max:1000', // Optional field
+        ]);
+    
+        $cart = session('cart');
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+        }
+    
+        // Get user details
+        $user = auth()->user();
+    
+        // Calculate total and apply discount
+        $total = array_sum(array_map(function ($item) {
+            $discountedPrice = $item['price'] - ($item['price'] * ($item['discount_percentage'] / 100));
+            return $discountedPrice * $item['quantity'];
+        }, $cart));
+    
+        $totalQuantity = array_sum(array_column($cart, 'quantity'));
+        $productNames = implode(', ', array_column($cart, 'name'));
+    
+        // Create a new order
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total' => $total,
+            'status' => 'completed',
+            'quantity' => $totalQuantity,
+            'product_name' => $productNames,
+            'address' => $request->input('address'), // Store the delivery address
+            'special_requests' => $request->input('special_requests'), // Store optional special requests
+            'email' => $user->email
+        ]);
+    
+        // Save each item in the order, including price
+        foreach ($cart as $id => $details) {
+            $price = $details['price']; // Retrieve price from cart
+            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100)); // Apply discount if applicable
+    
+            OrderItem::create([
+                'order_id' => $order->id,
+                'menu_item_id' => $id,
+                'quantity' => $details['quantity'],
+                'price' => $discountedPrice, // Store the discounted price
+            ]);
+        }
+    
+        // Clear the cart
+        session()->forget('cart');
+    
+        // Pass order and user details to the success page
+        return view('checkout.success', [
+            'order' => $order,
+            'cart' => $cart,
+            'user' => $user,
         ]);
     }
-
-    // Clear the cart
-    session()->forget('cart');
-
-    // Pass order and user details to the success page
-    return view('checkout.success', [
-        'order' => $order,
-        'cart' => $cart,
-        'user' => $user,
-    ]);
-}
-
 
     // Display the cart
     public function index()
@@ -158,6 +164,9 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
+        // Get user details
+        $user = auth()->user();
+
         // Calculate total and apply discount
         $total = array_sum(array_map(function ($item) {
             $discountedPrice = $item['price'] - ($item['price'] * ($item['discount_percentage'] / 100));
@@ -167,21 +176,27 @@ class CartController extends Controller
         $totalQuantity = array_sum(array_column($cart, 'quantity'));
         $productNames = implode(', ', array_column($cart, 'name'));
 
-        // Create the order
+        // Create a new order
         $order = Order::create([
-            'user_id' => auth()->id(),
+            'user_id' => $user->id,
             'total' => $total,
             'status' => 'completed',
             'quantity' => $totalQuantity,
             'product_name' => $productNames,
+            'address' => $request->input('address'), // Store the delivery address
+            'email' => $user->email
         ]);
 
-        // Save each item in the order
+        // Save each item in the order, including price
         foreach ($cart as $id => $details) {
+            $price = $details['price']; // Retrieve price from cart
+            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100)); // Apply discount if applicable
+
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $id,
                 'quantity' => $details['quantity'],
+                'price' => $discountedPrice, // Store the discounted price
             ]);
         }
 
@@ -191,7 +206,8 @@ class CartController extends Controller
         // Redirect to success page
         return view('checkout.success', [
             'order' => $order,
-            'cart' => $cart
+            'cart' => $cart,
+            'user' => $user
         ]);
     }
 }

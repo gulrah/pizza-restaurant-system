@@ -16,13 +16,6 @@ return new class extends Migration
             $table->string('name')->unique(); // Name of the category (e.g., Salads, Desserts, etc.)
             $table->timestamps();
         });
-
-        // Update menu_items table to include a foreign key for category_id
-        Schema::table('menu_items', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id')->nullable();
-
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
-        });
     }
 
     /**
@@ -30,11 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('menu_items', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn('category_id');
-        });
-
         Schema::dropIfExists('categories');
     }
 };

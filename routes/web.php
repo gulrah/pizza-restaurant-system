@@ -73,13 +73,19 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
     Route::resource('reservations', ReservationController::class)->except(['show']);
 });
 
+// Cart actions that do not require authentication (e.g., adding/removing items)
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::post('cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-Route::get('cart/payment', [CartController::class, 'paymentForm'])->name('cart.payment');
-Route::post('cart/payment', [CartController::class, 'processPayment'])->name('cart.processPayment');
+
+// Protect checkout and payment routes with 'auth' middleware
+Route::middleware(['auth'])->group(function () {
+    Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('cart/payment', [CartController::class, 'paymentForm'])->name('cart.payment');
+    Route::post('cart/payment', [CartController::class, 'processPayment'])->name('cart.processPayment');
+});
+
 
 
 

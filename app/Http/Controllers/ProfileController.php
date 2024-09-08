@@ -42,6 +42,7 @@ class ProfileController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'address' => $request->input('address'), // Ensure address is updated
+            'phone' => $request->phone, // Update phone number
         ]);
 
         // If the email has changed, mark email as unverified
@@ -61,6 +62,7 @@ class ProfileController extends Controller
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
+            'phone' => 'required|digits_between:1,15',
         ]);
 
         $user = $request->user();

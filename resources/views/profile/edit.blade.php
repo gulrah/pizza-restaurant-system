@@ -26,7 +26,7 @@
 
                     <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
 
                         <!-- Name field -->
                         <div class="form-group row mb-3">
@@ -54,7 +54,22 @@
                             </div>
                         </div>
 
-                        <!-- Address field -->
+                        <div class="form-group row mb-3">
+                            <label for="phone" class="col-md-4 col-form-label text-md-end">Phone Number</label>
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control border-0 shadow-sm @error('phone') is-invalid @enderror" 
+                                       name="phone" value="{{ old('phone', $user->phone) }}" 
+                                       required maxlength="15" pattern="\d*" title="Please enter a valid phone number">
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+
+                        {{-- <!-- Address field -->
                         <div class="form-group row mb-3">
                             <label for="address" class="col-md-4 col-form-label text-md-end">Address</label>
                             <div class="col-md-6">
@@ -65,15 +80,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <!-- City field (default Baku) -->
-                        <div class="form-group row mb-3">
-                            <label for="city" class="col-md-4 col-form-label text-md-end">City</label>
-                            <div class="col-md-6">
-                                <input id="city" type="text" class="form-control border-0 shadow-sm" name="city" value="Baku" readonly>
-                            </div>
-                        </div>
+                        </div> --}}
 
                         <!-- Password field -->
                         <div class="form-group row mb-3">

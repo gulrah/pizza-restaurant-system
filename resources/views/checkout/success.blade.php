@@ -23,7 +23,8 @@
                     <ul>
                         <li><strong>Name:</strong> {{ $user->name }}</li>
                         <li><strong>Email:</strong> {{ $user->email }}</li>
-                        <li><strong>Address:</strong> {{ $order->address }}</li> <!-- Assuming the address is stored in the order -->
+                        <li><strong>Phone:</strong> {{ $user->phone }}</li> <!-- Displaying the phone number -->
+                        <li><strong>Address:</strong> {{ $order->address }}</li>
                     </ul>
 
                     <!-- Order Summary -->
@@ -37,7 +38,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($order->items as $item)
+                            @foreach ($order->orderItems as $item)
                                 @php
                                     // Calculate the discounted price
                                     $originalPrice = $item->menuItem->price;
@@ -51,13 +52,12 @@
                                             <strong>Price:</strong>
                                             @if ($item->menuItem->discount_percentage > 0)
                                                 <!-- Show original price with strikethrough and discounted price in red -->
-                                                <del>${{ number_format($originalPrice, 2) }}</del> <!-- Original Price -->
+                                                <del>${{ number_format($originalPrice, 2) }}</del>
                                                 <span class="text-danger">
-                                                    ${{ number_format($discountedPrice, 2) }} <!-- Discounted Price -->
+                                                    ${{ number_format($discountedPrice, 2) }}
                                                     <small class="text-muted">(-{{ $item->menuItem->discount_percentage }}%)</small>
                                                 </span>
                                             @else
-                                                <!-- No discount, show the normal price -->
                                                 ${{ number_format($originalPrice, 2) }}
                                             @endif
                                         </p>

@@ -20,6 +20,7 @@
                     <!-- Payment Form -->
                     <form action="{{ route('cart.processPayment') }}" method="POST">
                         @csrf
+                        <!-- Card details input fields -->
                         <div class="mb-3">
                             <label for="card_number" class="form-label">Card Number</label>
                             <input type="text" name="card_number" class="form-control" id="card_number" required maxlength="16">
@@ -33,6 +34,17 @@
                         <div class="mb-3">
                             <label for="cvv" class="form-label">CVV</label>
                             <input type="text" name="cvv" class="form-control" id="cvv" required maxlength="3">
+                        </div>
+
+                        <!-- New fields for address and special requests -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Delivery Address</label>
+                            <input type="text" name="address" class="form-control" id="address" required placeholder="Enter your delivery address">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="special_requests" class="form-label">Special Requests (Optional)</label>
+                            <textarea name="special_requests" class="form-control" id="special_requests" placeholder="Any special requests for your order"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-success btn-lg w-100">Submit Payment</button>
