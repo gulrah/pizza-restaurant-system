@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ContactDetailController;
 
 // Home Route
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,6 +36,16 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 // Admin Messages (viewable by admin only)
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/messages', [ContactController::class, 'index'])->name('messages');
+    Route::get('/contact-details/edit', [ContactDetailController::class, 'edit'])->name('contact_details.edit');
+    Route::put('/contact-details', [ContactDetailController::class, 'update'])->name('contact_details.update');    
+});
+// In routes/web.php
+Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+
+
+// Orders Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
 });
 
 // Authenticated Routes
@@ -43,20 +54,39 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
+    // View profile page
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+
+// Edit profile page
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+// Update profile information
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+// Delete profile (account deletion)
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // User-specific reservation routes
     Route::resource('reservations', ReservationController::class)->except(['show']);
 });
 
-// Cart Routes
-Route::resource('cart', CartController::class);
+Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('cart/payment', [CartController::class, 'paymentForm'])->name('cart.payment');
+Route::post('cart/payment', [CartController::class, 'processPayment'])->name('cart.processPayment');
+
+
 
 // Admin Routes with is_admin Middleware
 Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    
     
     // Admin Resources
     Route::resources([

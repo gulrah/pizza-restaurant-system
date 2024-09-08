@@ -12,7 +12,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('total', 8, 2);
-            $table->string('status')->default('completed');
+            $table->string('status')->default('pending');
             $table->integer('quantity');
             $table->string('product_name');
             $table->timestamps();

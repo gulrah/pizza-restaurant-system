@@ -4,7 +4,6 @@
 <div class="container">
     <h1>Edit Menu Item</h1>
 
-    <!-- Display Validation Errors -->
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -32,6 +31,12 @@
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
             <input type="number" name="price" id="price" class="form-control" value="{{ old('price', $menuItem->price) }}" step="0.01" required>
+        </div>
+
+        <!-- New Discount Percentage Field -->
+        <div class="mb-3">
+            <label for="discount_percentage" class="form-label">Discount Percentage</label>
+            <input type="number" name="discount_percentage" id="discount_percentage" class="form-control" value="{{ old('discount_percentage', $menuItem->discount_percentage) }}" min="0" max="100" step="0.01">
         </div>
 
         <div class="mb-3">

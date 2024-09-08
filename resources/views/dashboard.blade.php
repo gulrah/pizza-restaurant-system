@@ -29,7 +29,7 @@
                     <i class="fas fa-user fa-3x mb-3 text-primary"></i>
                     <h5 class="card-title">Profile Settings</h5>
                     <p>Update your personal information and password.</p>
-                    <a href="{{ route('profile.index') }}" class="btn btn-outline-primary btn-sm">Edit Profile</a>
+                    <a href="{{ route('profile.index') }}" class="btn btn-outline-primary btn-sm">View Profile</a>
                 </div>
             </div>
         </div>

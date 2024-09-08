@@ -22,30 +22,53 @@
                     <tr>
                         <th>Order ID</th>
                         <th>Products</th>
+                        <th>Quantity</th>
                         <th>Total Cost</th>
                         <th>Date</th>
-                        <th>Status</th>
+                        <th>Status</th> <!-- Status column to display order status -->
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($orders as $order)
                         <tr>
                             <td>{{ $order->id }}</td>
-                            <td>
-                                {{$order->product_name }} x {{ $order->quantity }}<br>
-                               
-                            </td>
+                            <td>{{ $order->product_name }}</td> <!-- Product name only -->
+                            <td>{{ $order->quantity }}</td> <!-- Quantity -->
                             <td>${{ number_format($order->total, 2) }}</td>
                             <td>{{ $order->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <span class="badge {{ $order->status == 'completed' ? 'bg-success' : 'bg-warning' }}">
-                                    {{ ucfirst($order->status) }}
+                                <!-- Displaying status based on the value -->
+                                @php
+                                    $statusLabel = '';
+                                    $statusClass = '';
+                                    switch ($order->status) {
+                                        case 'completed':
+                                            $statusLabel = 'Completed';
+                                            $statusClass = 'bg-success';
+                                            break;
+                                        case 'on_way':
+                                            $statusLabel = 'On Way';
+                                            $statusClass = 'bg-primary';
+                                            break;
+                                        case 'admin_accept':
+                                            $statusLabel = 'Preparing';
+                                            $statusClass = 'bg-info';
+                                            break;
+                                        case 'pending':
+                                            $statusLabel = 'Pending';
+                                            $statusClass = 'bg-warning';
+                                            break;
+                                    }
+                                @endphp
+                                <!-- Display the status with the corresponding label and badge -->
+                                <span class="badge {{ $statusClass }}">
+                                    {{ $statusLabel }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">No orders found</td>
+                            <td colspan="6" class="text-center">No orders found</td> <!-- Adjusted colspan to 6 -->
                         </tr>
                     @endforelse
                 </tbody>

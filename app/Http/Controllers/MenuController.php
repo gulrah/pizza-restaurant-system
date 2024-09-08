@@ -31,6 +31,7 @@ class MenuController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
+            'discount_percentage' => 'nullable|numeric|min:0|max:100',
             'category_id' => 'required|exists:categories,id', // Ensure the category exists
             'image' => 'nullable|image|max:2048' // Optional image upload
         ]);

@@ -33,7 +33,7 @@
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Menu Items</h5>
                     <h2 class="card-text">{{ $totalMenuItems }}</h2>
-                    <p class="card-text">Items listed in the menu.</p>
+                    <p class="card-text">Items listed in the menu. Lorem ipsum dolor sit amet.</p>
                     <a href="{{ route('admin.menu.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Menu</a>
                 </div>
             </div>
@@ -51,53 +51,67 @@
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
-                    <h5 class="card-title">Recent Blog Posts</h5>
-                    <h2 class="card-text">{{ $totalBlogs }}</h2>
-                    <p class="card-text">Blog posts published this month.</p>
-                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Blogs</a>
+                    <h5 class="card-title">Contact Messages</h5>
+                    <h2 class="card-text">{{ $totalContactMessages }}</h2>
+                    <p class="card-text">Messages received this month.</p>
+                    <a href="{{ route('admin.messages') }}" class="btn btn-outline-light btn-sm mt-auto">View Messages</a>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
-                    <h5 class="card-title">Categories</h5>
-                    <h2 class="card-text">{{ $totalCategories }}</h2>
-                    <p class="card-text">Total categories available.</p>
-                    <a href="{{ route('admin.categories.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Categories</a>
+                    <h5 class="card-title">Contact Details</h5>
+                    <p class="card-text">Update contact details for the site. Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
+                    <a href="{{ route('admin.contact_details.edit') }}" class="btn btn-outline-light btn-sm mt-auto">Edit Details</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-lg-3 col-md-6">
-        <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
-            <div class="card-body text-white d-flex flex-column align-items-start">
-                <h5 class="card-title">Team Members</h5>
-                <h2 class="card-text">{{ $totalTeamMembers }}</h2>
-                <p class="card-text">See Team Members.</p>
-                <a href="{{ route('admin.team.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Team Members</a>
+        <div class="col-lg-3 col-md-6">
+            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
+                <div class="card-body text-white d-flex flex-column align-items-start">
+                    <h5 class="card-title">Team Members</h5>
+                    <h2 class="card-text">{{ $totalTeamMembers }}</h2>
+                    <p class="card-text">See Team Members.</p>
+                    <a href="{{ route('admin.team.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Team Members</a>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Remaining Dashboard Sections (Recent Activities, To-Do List, etc.) -->
     <div class="row g-4 mt-4">
-        <!-- Recent Activities -->
+        <!-- Last Orders Section -->
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Recent Activities</h5>
+                    <h5 class="mb-0">Last Orders</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <li class="list-group-item">Order #1234 completed by Admin at 3:15 PM</li>
-                        <li class="list-group-item">New reservation added for 4 people at 2:00 PM</li>
-                        <li class="list-group-item">Menu item 'Spaghetti' updated by Admin at 1:00 PM</li>
-                        <li class="list-group-item">Blog post 'New Summer Menu' published at 12:00 PM</li>
+                        @foreach($lastOrders as $order)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Order #{{ $order->id }}</strong> by {{ $order->user->name }}<br>
+                                Total: ${{ number_format($order->total, 2) }}<br>
+                                Date: {{ $order->created_at->format('Y-m-d H:i') }}
+                            </div>
+                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-flex align-items-center">
+                                @csrf
+                                @method('PATCH')
+                                <select name="status" class="form-select form-select-sm me-2" onchange="this.form.submit()">
+                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="admin_accept" {{ $order->status == 'admin_accept' ? 'selected' : '' }}>Preparing</option>
+                                    <option value="on_way" {{ $order->status == 'on_way' ? 'selected' : '' }}>On Way</option>
+                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                </select>
+                            </form>
+                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

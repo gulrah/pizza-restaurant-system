@@ -1,56 +1,78 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-xxl py-5 bg-dark hero-header mb-5" 
-     style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
-            background-size: cover; background-position: center; height: 50vh;">
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
     <div class="container my-5 py-5 text-center">
         <h1 class="display-3 text-white mb-3 animated slideInDown">Payment Success</h1>
-        <a href="/" class="btn btn-primary">Return Home</a>
-        <a href="{{ route('orders.index') }}" class="btn btn-secondary">View Orders</a>
+        <p class="text-white mb-4">Thank you for your purchase! Your order has been successfully processed.</p>
+        <a href="/" class="btn btn-light btn-lg me-3">Return Home</a>
+        <a href="{{ route('orders.index') }}" class="btn btn-outline-light btn-lg">View Orders</a>
     </div>
 </div>
 
-<div class="container mt-4">
-    <h1>Payment Success</h1>
-    <p>Your payment was successfully processed. Thank you for your order!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h2 class="text-center mb-4"><i class="fa fa-check-circle text-success"></i> Payment Success</h2>
+                    <p class="text-center lead">Your payment was successfully processed. Thank you for your order!</p>
 
-    <h2>Order Summary</h2>
-    <div class="mb-4">
-        <h4>Customer Details</h4>
-        <p><strong>Email:</strong> {{ $order->email }}</p>
-        <p><strong>Address:</strong> {{ $order->address }}</p>
+                    <!-- Display user information -->
+                    <h5 class="mb-3">Customer Information</h5>
+                    <ul>
+                        <li><strong>Name:</strong> {{ $user->name }}</li>
+                        <li><strong>Email:</strong> {{ $user->email }}</li>
+                        <li><strong>Address:</strong> {{ $order->address }}</li> <!-- Assuming the address is stored in the order -->
+                    </ul>
+
+                    <!-- Order Summary -->
+                    <h4 class="mb-3">Order Summary</h4>
+                    <table class="table table-bordered mt-3">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($order->items as $item)
+                                @php
+                                    // Calculate the discounted price
+                                    $originalPrice = $item->menuItem->price;
+                                    $discountedPrice = $originalPrice - ($originalPrice * ($item->menuItem->discount_percentage / 100));
+                                @endphp
+                                <tr>
+                                    <td>{{ $item->menuItem->name }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    <td>
+                                        <p class="card-text">
+                                            <strong>Price:</strong>
+                                            @if ($item->menuItem->discount_percentage > 0)
+                                                <!-- Show original price with strikethrough and discounted price in red -->
+                                                <del>${{ number_format($originalPrice, 2) }}</del> <!-- Original Price -->
+                                                <span class="text-danger">
+                                                    ${{ number_format($discountedPrice, 2) }} <!-- Discounted Price -->
+                                                    <small class="text-muted">(-{{ $item->menuItem->discount_percentage }}%)</small>
+                                                </span>
+                                            @else
+                                                <!-- No discount, show the normal price -->
+                                                ${{ number_format($originalPrice, 2) }}
+                                            @endif
+                                        </p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2" class="text-end fw-bold">Total</td>
+                                <td class="fw-bold">${{ number_format($order->total, 2) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-4">
-        <h4>Order Details</h4>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($cart as $id => $details)
-                    <tr>
-                        <td>{{ $details['name'] }}</td>
-                        <td>{{ $details['quantity'] }}</td>
-                        <td>${{ $details['price'] }}</td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td colspan="2" class="text-right"><strong>Total</strong></td>
-                    <td><strong>${{ array_sum(array_map(function ($item) {
-                        return $item['price'] * $item['quantity'];
-                    }, $cart)) }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <a href="/" class="btn btn-primary">Return Home</a>
-    <a href="{{ route('orders.index') }}" class="btn btn-secondary">View Orders</a>
 </div>
 @endsection

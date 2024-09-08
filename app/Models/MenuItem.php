@@ -15,6 +15,7 @@ class MenuItem extends Model
         'price',
         'category_id',
         'image',
+        'discount_percentage',
     ];
 
     // Define the relationship to Category
@@ -22,4 +23,12 @@ class MenuItem extends Model
     {
         return $this->belongsTo(Category::class);
     }
+     // Method to calculate discounted price
+     public function getDiscountedPriceAttribute()
+     {
+         if ($this->discount_percentage > 0) {
+             return $this->price - ($this->price * ($this->discount_percentage / 100));
+         }
+         return $this->price;
+     }
 }

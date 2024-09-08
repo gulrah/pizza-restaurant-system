@@ -17,25 +17,26 @@ class MenuController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|max:2048',
-            'category_id' => 'nullable|exists:categories,id', // Validate category_id
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price' => 'required|numeric',
+        'discount_percentage' => 'nullable|numeric|min:0|max:100', // Validate discount percentage
+        'image' => 'nullable|image|max:2048',
+        'category_id' => 'nullable|exists:categories,id',
+    ]);
 
-        $menuItem = new MenuItem($request->only(['name', 'description', 'price', 'image', 'category_id']));
+    $menuItem = new MenuItem($request->only(['name', 'description', 'price', 'discount_percentage', 'image', 'category_id']));
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $menuItem->image = $request->file('image')->store('menu_images', 'public');
-        }
-
-        $menuItem->save();
-
-        return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully!');
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        $menuItem->image = $request->file('image')->store('menu_images', 'public');
     }
+
+    $menuItem->save();
+
+    return redirect()->route('admin.menu.index')->with('success', 'Menu item added successfully with discount!');
+}
     
 
     public function index(Request $request)
@@ -69,31 +70,23 @@ public function update(Request $request, $id)
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
+        'discount_percentage' => 'nullable|numeric|min:0|max:100', // Validate discount percentage
         'category_id' => 'nullable|exists:categories,id',
-        'image' => 'nullable|image|max:2048', // Max size 2MB
+        'image' => 'nullable|image|max:2048',
     ]);
 
     $menuItem = MenuItem::findOrFail($id);
 
-    $menuItem->name = $request->input('name');
-    $menuItem->description = $request->input('description');
-    $menuItem->price = $request->input('price');
-    $menuItem->category_id = $request->input('category_id');
+    $menuItem->update($request->only(['name', 'description', 'price', 'discount_percentage', 'category_id']));
 
     if ($request->hasFile('image')) {
         // Delete old image if exists
         if ($menuItem->image) {
             Storage::delete($menuItem->image);
         }
-
-        // Store the new image
-        $path = $request->file('image')->store('menu_images', 'public');
-        $menuItem->image = $path;
+        $menuItem->image = $request->file('image')->store('menu_images', 'public');
     }
 
-    $menuItem->save();
-
-    return redirect()->route('admin.menu.index')->with('success', 'Menu item updated successfully.');
+    return redirect()->route('admin.menu.index')->with('success', 'Menu item updated with discount successfully.');
 }
-
 }

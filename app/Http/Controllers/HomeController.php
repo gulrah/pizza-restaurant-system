@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeamMember; // Add this line to import the TeamMember model
+use App\Models\TeamMember;
+use App\Models\MenuItem; // Import MenuItem model to fetch the discounted items
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,8 +13,10 @@ class HomeController extends Controller
         // Fetch all team members from the database
         $teamMembers = TeamMember::all();
 
-        // Pass the team members to the view
-        return view('home', compact('teamMembers'));
+        // Fetch discounted items from the menu
+        $discountedItem = MenuItem::where('discount_percentage', '>', 0)->inRandomOrder()->first();
+
+        // Pass the team members and the discounted item to the view
+        return view('home', compact('teamMembers', 'discountedItem'));
     }
 }
-

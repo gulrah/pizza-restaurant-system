@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- Success Alert with Warning Color -->
+@if (session('success'))
+<div class="alert alert-warning alert-dismissible fade show text-center" role="alert" id="cartAlert" 
+     style="position: fixed; top: 0; left: 0; right: 0; z-index: 1050; border-radius: 0; margin: 0; background-color: #f0ad4e; color: #fff;">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+<!-- Menu Header -->
 <div class="container-xxl py-5 bg-dark hero-header mb-5" 
      style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
             background-size: cover; background-position: center; height: 50vh;">
@@ -15,7 +26,6 @@
             </div>
         </form>
         <!-- Search Form End -->
-        
     </div>
 </div>
 
@@ -30,8 +40,21 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $item->name }}</h5>
                 <p class="card-text">{{ $item->description }}</p>
+                
+                <!-- Display Price and Discounted Price -->
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted">${{ number_format($item->price, 2) }}</span>
+                    @if ($item->discount_percentage > 0)
+                        <span class="text-muted">
+                            <del>${{ number_format($item->price, 2) }}</del> <!-- Original Price with a strikethrough -->
+                        </span>
+                        <span class="text-danger">
+                            ${{ number_format($item->price - ($item->price * $item->discount_percentage / 100), 2) }} <!-- Discounted Price -->
+                            <small class="text-muted">(-{{ $item->discount_percentage }}%)</small>
+                        </span>
+                    @else
+                        <span class="text-muted">${{ number_format($item->price, 2) }}</span> <!-- Original Price (no discount) -->
+                    @endif
+
                     <form action="{{ route('cart.add') }}" method="POST">
                         @csrf
                         <input type="hidden" name="item_id" value="{{ $item->id }}">
@@ -51,6 +74,19 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Automatically hide alert after 3 seconds
+        const alert = document.getElementById('cartAlert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('fade');
+                alert.classList.remove('show');
+            }, 3000);
+        }
+    });
+</script>
+
+<script>
 document.getElementById('menuSearch').addEventListener('input', function() {
     const searchQuery = this.value.toLowerCase();
     document.querySelectorAll('.menu-item').forEach(item => {
@@ -64,7 +100,7 @@ document.getElementById('menuSearch').addEventListener('input', function() {
     });
 });
 
-// Optional: If you want to handle form submission with Enter key while still supporting live search
+// Optional: Handle form submission with Enter key
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     const searchQuery = document.getElementById('menuSearch').value;
     if (searchQuery.trim() === '') {

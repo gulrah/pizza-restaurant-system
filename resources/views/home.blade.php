@@ -6,8 +6,8 @@
             <div class="container my-5 py-5 text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Authentic Italian Pizzas</h1>
                 <p class="text-white mb-4">Pizza Tastes Better Than Skinny Feels</p>
-                <a href="{{ url('/reservations') }}" class="btn btn-primary py-sm-3 px-sm-5 me-3">Book A Table</a>
-                <a href="{{ url('/menu') }}" class="btn btn-outline-light py-sm-3 px-sm-5">See Menu</a>
+                <a href="{{ url('/reservations') }}" class="btn btn-warning py-sm-3 px-sm-5 me-3">Book A Table</a>
+                <a href="{{ url('/menu') }}" class="btn btn-light py-sm-3 px-sm-5">See Menu</a>
             </div>
         </div>
     </div>
@@ -47,16 +47,17 @@
             </div>
         </div>
     </div>
-    <div class="custom-offers-section d-flex flex-wrap" style="height: 100%;">
+        <div class="custom-offers-section d-flex flex-wrap" style="height: 100%;">
         <!-- First div - 40% width -->
         <div class="offer-card" style="flex: 0 0 45%; margin-right: 15px; margin-left: 15px;">
             <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                 <img src="https://transvelo.github.io/pizzeria/assets/images/banner-1.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
                 <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 64px; color: white;">
                     <p class="text-secondary" style="font-size: 1.2rem; font-weight: 400;">Special offer</p>
-                    <h2 class="font-weight-bold" style="font-size: 2.5rem; font-weight: 600;">Special Delicious</h2>
-                    <p style="font-size: 1rem; font-weight: 500;">Mexican Pizza Tastes Better</p>
-                    <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
+                    <h2 class="font-weight-bold" style="font-size: 2.5rem; font-weight: 600;">{{ $discountedItem->name }}</h2>
+                    <p style="font-size: 1rem; font-weight: 500;">Original Price: ${{ number_format($discountedItem->price, 2) }}</p>
+                    <p style="font-size: 1.2rem; font-weight: 600;">Now: ${{ number_format($discountedItem->price - ($discountedItem->price * $discountedItem->discount_percentage / 100), 2) }}</p>
+                    <a href="{{ route('menu.index') }}" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
                         Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-black.svg" alt="" style="width: 16px;">
                     </a>
                 </div>
@@ -106,11 +107,6 @@
                             </div>
                             <h5 class="mb-0">{{ $teamMember->name }}</h5>
                             <small>{{ $teamMember->job_title }}</small>
-                            <div class="d-flex justify-content-center mt-3">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
                         </div>
                     </div>
                 @endforeach
