@@ -11,36 +11,56 @@
         body {
             display: flex;
             min-height: 100vh;
+            background-color: #f8f9fa;
         }
         .sidebar {
-            min-width: 250px;
+            min-width: 260px;
             background-color: #343a40;
             padding: 20px;
             position: fixed;
             height: 100%;
             overflow-y: auto;
         }
+        .sidebar h4 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
         .sidebar .nav-link {
             color: #ffffff;
             font-weight: 500;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
         }
         .sidebar .nav-link:hover {
             background-color: #495057;
             color: #ffffff;
         }
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            width: 100%;
-        }
-        .dropdown-menu {
+        .sidebar .dropdown-menu {
             background-color: #495057;
         }
-        .dropdown-item {
+        .sidebar .dropdown-item {
             color: white;
         }
-        .dropdown-item:hover {
+        .sidebar .dropdown-item:hover {
             background-color: #6c757d;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-item .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -48,10 +68,11 @@
 
     <!-- Sidebar -->
     <nav class="sidebar">
-        <h4 class="text-white">Admin Panel</h4>
+        <h4 class="text-white mb-4"><a href="{{ route('admin.dashboard') }}" class="text-white text-decoration-none">Admin Panel</a></h4>
         <ul class="nav flex-column">
+            <!-- Contact Messages -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                <a class="nav-link" href="{{ route('admin.messages') }}">Contact Messages</a>
             </li>
 
             <!-- Menu Dropdown -->
@@ -117,8 +138,13 @@
                 <a class="nav-link" href="{{ route('admin.contact_details.edit') }}">Contact Details</a>
             </li>
 
+            <!-- Go to Website Home Button -->
+            <li class="nav-item mt-2">
+                <a href="{{ url('/') }}" class="btn btn-outline-light w-100">Go to Website Home</a>
+            </li>
+
             <!-- Logout Button -->
-            <li class="nav-item mt-4">
+            <li class="nav-item mt-2">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-danger w-100">Logout</button>

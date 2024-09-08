@@ -32,7 +32,24 @@
     <head>
         <!-- Bootstrap CSS (if not already included) -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            
+            <!-- Custom Styles -->
+            <style>
+                .text-primary {
+            color: #DC3545 !important;
+        }
+                .btn-primary {
+                    background-color: var(--bs-warning) !important;
+                    border-color: var(--bs-warning) !important;
+                    color: #000 !important; /* You can customize the text color as needed */
+                }
+                .btn-primary:hover, .btn-primary:focus {
+                    background-color: #d39e00 !important; /* Darker warning color for hover */
+                    border-color: #c69500 !important;
+                }
+            </style>
         <!-- DatePicker CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     </head>
@@ -40,81 +57,87 @@
 </head>
 <body>
 <div id="app">
-    <!-- Navbar & Hero Start -->
-<div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark px-4 px-lg-5 py-3 py-lg-0" 
-         style="position: absolute; width: 100%; top: 0; margin-top: 0.5%;">
-        <div class="container-fluid">
-            <a href="{{ url('/') }}" class="navbar-brand mx-auto">
-                <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/logo-white.svg" alt="Pizzeria Logo" style="height: 40px; margin-right: 10px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+     style="position: absolute; width: 100%; top: 0; margin-top: 0.5%;">
+    <div class="container-fluid">
+        <a href="{{ url('/') }}" class="navbar-brand mx-auto">
+            <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/logo-white.svg" alt="Pizzeria Logo" style="height: 40px; margin-right: 10px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" aria-current="page" href="{{ url('/') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/about') }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/menu') }}">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/blogs') }}">Blogs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ url('/contact') }}">Contact</a>
+                </li>
+
+                <!-- Admin Dashboard Icon, only visible to admin users -->
+                @if(auth()->check() && auth()->user()->is_admin)
                     <li class="nav-item">
-                        <a class="nav-link text-white" aria-current="page" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link text-warning" href="{{ route('admin.dashboard') }}">
+                            <i class="fas fa-user-cog"></i> <!-- Admin Icon -->
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url('/about') }}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url('/menu') }}">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url('/blogs') }}">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url('/contact') }}">Contact</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a href="{{ url('/reservations') }}" class="btn btn-warning me-3">Book A Table</a>
-                    <a class="btn text-white me-3" href="{{ url('/search') }}">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <a class="btn text-white me-3 position-relative" href="{{ url('/cart') }}">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ session('cart') ? array_sum(array_column(session('cart'), 'quantity')) : 0 }}
-                        </span>
-                    </a>                    
-                    @guest
-                        <a class="btn text-white" href="{{ route('login') }}">Login</a>
-                    @else
-                        <div class="nav-item dropdown">
-                            <a class="btn btn-outline-warning dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    @endguest
-                </div>
+                @endif
+            </ul>
+
+            <div class="d-flex">
+                <a href="{{ url('/reservations') }}" class="btn btn-warning me-3">Book A Table</a>
+
+                <!-- Cart Icon with Warning Color -->
+                <a class="btn text-warning me-3 position-relative" href="{{ url('/cart') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ session('cart') ? array_sum(array_column(session('cart'), 'quantity')) : 0 }}
+                    </span>
+                </a>
+
+                @guest
+                    <a class="btn text-white" href="{{ route('login') }}">Login</a>
+                @else
+                    <!-- User Icon without Outline and with Warning Color -->
+                    <div class="nav-item dropdown">
+                        <a class="btn text-warning dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> <!-- User Icon -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endguest
             </div>
         </div>
-    </nav>
-</div>
-
-
+    </div>
+</nav>
         <main class="py-0">
             @yield('content')
         </main>
 
 <!-- Footer Start -->
-<div class="container-fluid text-secondary" style="background-color: #1a1a1a; color: #f1f1f1; margin-top: 90px;">
+<div class="container-fluid text-secondary" style="background-color: #1a1a1a; color: #DC3545; margin-top: 90px;">
     <div class="container">
         <div class="row gx-5">
             <div class="col-lg-4 col-md-6 mb-lg-n5">
@@ -130,7 +153,6 @@
             <div class="col-lg-8 col-md-6">
                 <div class="row gx-5">
                     @php
-                        // Fetch contact details from the database
                         $contactDetail = \App\Models\ContactDetail::first();
                     @endphp
                     <div class="col-lg-6 col-md-12 pt-5 mb-5">
@@ -157,11 +179,21 @@
                     <div class="col-lg-6 col-md-12 pt-5 mb-5">
                         <h4 class="mb-4 text-warning">Quick Links</h4>
                         <div class="d-flex flex-column">
-                            <a class="text-light mb-2 footer-link" href="#" style="text-decoration: none;"><i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>About</a>
-                            <a class="text-light mb-2 footer-link" href="#" style="text-decoration: none;"><i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Menu</a>
-                            <a class="text-light mb-2 footer-link" href="#" style="text-decoration: none;"><i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Reservations</a>
-                            <a class="text-light mb-2 footer-link" href="#" style="text-decoration: none;"><i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Blogs</a>
-                            <a class="text-light mb-2 footer-link" href="#" style="text-decoration: none;"><i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Contact</a>
+                            <a class="text-light mb-2 footer-link" href="{{ route('about') }}" style="text-decoration: none;">
+                                <i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>About
+                            </a>
+                            <a class="text-light mb-2 footer-link" href="{{ route('menu.index') }}" style="text-decoration: none;">
+                                <i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Menu
+                            </a>
+                            <a class="text-light mb-2 footer-link" href="{{ route('reservations.index') }}" style="text-decoration: none;">
+                                <i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Reservations
+                            </a>
+                            <a class="text-light mb-2 footer-link" href="{{ route('blogs.index') }}" style="text-decoration: none;">
+                                <i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Blogs
+                            </a>
+                            <a class="text-light mb-2 footer-link" href="{{ route('contact') }}" style="text-decoration: none;">
+                                <i class="bi bi-arrow-right me-2" style="color: #F5CA48;"></i>Contact
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -169,26 +201,7 @@
         </div>
     </div>
 </div>
-<!-- Footer End --> 
-
-<!-- Add this CSS to implement hover effects -->
-<style>
-    .footer-link {
-        transition: color 0.3s ease;
-    }
-    .footer-link:hover {
-        color: #ff6347; /* A modern hover color (Tomato) */
-    }
-    .social-btn {
-        transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-    .social-btn:hover {
-        transform: scale(1.1); /* Slight zoom effect */
-        background-color: #ff6347; /* Hover background color */
-    }
-</style>
-
-
+<!-- Footer End -->
     </div>
 
     <!-- Script Section -->

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container-fluid p-4">
+<div class="container p-4">
     <h1 class="mb-4 text-center">Admin Dashboard</h1>
 
-    <div class="row g-4">
-        <!-- Statistics Cards -->
-        <div class="col-lg-3 col-md-6">
+       <!-- Statistics Section with Colorful Cards -->
+       <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Total Orders</h5>
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Total Reservations</h5>
@@ -28,18 +28,18 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #36d1dc 0%, #5b86e5 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Menu Items</h5>
                     <h2 class="card-text">{{ $totalMenuItems }}</h2>
-                    <p class="card-text">Items listed in the menu. Lorem ipsum dolor sit amet.</p>
+                    <p class="card-text">Items listed in the menu.</p>
                     <a href="{{ route('admin.menu.index') }}" class="btn btn-outline-light btn-sm mt-auto">Manage Menu</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #8e44ad 0%, #3498db 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Total Users</h5>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ff6a00 0%, #ee0979 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
                     <h5 class="card-title">Contact Messages</h5>
@@ -61,91 +61,105 @@
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #fc4a1a 0%, #f7b733 100%);">
-                <div class="card-body text-white d-flex flex-column align-items-start">
-                    <h5 class="card-title">Contact Details</h5>
-                    <p class="card-text">Update contact details for the site. Lorem, ipsum dolor sit amet consectetur adipisicing.</p>
-                    <a href="{{ route('admin.contact_details.edit') }}" class="btn btn-outline-light btn-sm mt-auto">Edit Details</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
+        <!-- Replaced Team Members with Blogs -->
+        <div class="col-lg-4 col-md-6">
             <div class="card border-0 shadow-sm rounded" style="background: linear-gradient(to right, #ee9ca7 0%, #ffdde1 100%);">
                 <div class="card-body text-white d-flex flex-column align-items-start">
-                    <h5 class="card-title">Team Members</h5>
-                    <h2 class="card-text">{{ $totalTeamMembers }}</h2>
-                    <p class="card-text">See Team Members.</p>
-                    <a href="{{ route('admin.team.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Team Members</a>
+                    <h5 class="card-title">Total Blogs</h5>
+                    <h2 class="card-text">{{ $totalBlogs }}</h2>
+                    <p class="card-text">Published blogs on the platform.</p>
+                    <a href="{{ route('admin.blogs.index') }}" class="btn btn-outline-light btn-sm mt-auto">View Blogs</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Remaining Dashboard Sections (Recent Activities, To-Do List, etc.) -->
-    <div class="row g-4 mt-4">
-        <!-- Last Orders Section -->
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm rounded">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Last Orders</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        @foreach($lastOrders as $order)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <strong>Order #{{ $order->id }}</strong> by {{ $order->user->name }}<br>
-                                Total: ${{ number_format($order->total, 2) }}<br>
-                                Date: {{ $order->created_at->format('Y-m-d H:i') }}
-                            </div>
-                            <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="d-flex align-items-center">
-                                @csrf
-                                @method('PATCH')
-                                <select name="status" class="form-select form-select-sm me-2" onchange="this.form.submit()">
-                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="admin_accept" {{ $order->status == 'admin_accept' ? 'selected' : '' }}>Preparing</option>
-                                    <option value="on_way" {{ $order->status == 'on_way' ? 'selected' : '' }}>On Way</option>
-                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                                </select>
-                            </form>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+    <!-- Last Orders Section -->
+    <div class="card border-0 shadow-sm rounded mt-5">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Recent Orders</h5>
         </div>
+        <div class="card-body">
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Total</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lastOrders as $order)
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->user->name }}</td>
+                            <td>${{ number_format($order->total, 2) }}</td>
+                            <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                            <td>
+                                <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="admin_accept" {{ $order->status == 'admin_accept' ? 'selected' : '' }}>Preparing</option>
+                                        <option value="on_way" {{ $order->status == 'on_way' ? 'selected' : '' }}>On Way</option>
+                                        <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td><a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-info btn-sm">View</a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        <!-- To-Do List -->
-        <div class="col-lg-6">
-            <div class="card border-0 shadow-sm rounded">
-                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">To-Do List</h5>
-                    <button id="addTaskBtn" class="btn btn-light btn-sm">Add New Task</button>
-                </div>
-                <div class="card-body">
-                    <ul id="taskList" class="list-group">
-                        <!-- Example Tasks -->
-                        <li class="list-group-item d-flex align-items-center">
-                            <input type="checkbox" id="task1" class="form-check-input me-2">
-                            <label for="task1" class="form-check-label flex-grow-1">Update menu with new seasonal items</label>
-                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center">
-                            <input type="checkbox" id="task2" class="form-check-input me-2">
-                            <label for="task2" class="form-check-label flex-grow-1">Prepare marketing materials for new blog post</label>
-                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
-                        </li>
-                        <li class="list-group-item d-flex align-items-center">
-                            <input type="checkbox" id="task3" class="form-check-input me-2">
-                            <label for="task3" class="form-check-label flex-grow-1">Review customer feedback for recent changes</label>
-                            <button class="btn btn-danger btn-sm ms-2 remove-task">Delete</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- Last Reservations Section -->
+    <div class="card border-0 shadow-sm rounded mt-5">
+        <div class="card-header bg-warning text-white">
+            <h5 class="mb-0">Recent Reservations</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Customer Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Table Number</th>
+                        <th>Guests</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lastReservations as $reservation)
+                        <tr>
+                            <td>{{ $reservation->id }}</td>
+                            <td>{{ $reservation->user->name }}</td>
+                            <td>{{ $reservation->date}}</td>
+                            <td>{{ ucfirst($reservation->time_slot) }}</td>
+                            <td>Table {{ $reservation->table_number }}</td>
+                            <td>{{ $reservation->people_count }} guests</td>
+                            <td><a href="{{ route('admin.reservations.show', $reservation->id) }}" class="btn btn-info btn-sm">View</a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+<!-- Script for removing tasks -->
+<script>
+    document.querySelectorAll('.remove-task').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('li').remove();
+        });
+    });
+</script>
 @endsection

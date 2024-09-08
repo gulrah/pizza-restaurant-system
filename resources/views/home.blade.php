@@ -47,50 +47,62 @@
             </div>
         </div>
     </div>
-        <div class="custom-offers-section d-flex flex-wrap" style="height: 100%;">
-        <!-- First div - 40% width -->
-        <div class="offer-card" style="flex: 0 0 45%; margin-right: 15px; margin-left: 15px;">
-            <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
-                <img src="https://transvelo.github.io/pizzeria/assets/images/banner-1.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 64px; color: white;">
-                    <p class="text-secondary" style="font-size: 1.2rem; font-weight: 400;">Special offer</p>
-                    <h2 class="font-weight-bold" style="font-size: 2.5rem; font-weight: 600;">{{ $discountedItem->name }}</h2>
-                    <p style="font-size: 1rem; font-weight: 500;">Original Price: ${{ number_format($discountedItem->price, 2) }}</p>
-                    <p style="font-size: 1.2rem; font-weight: 600;">Now: ${{ number_format($discountedItem->price - ($discountedItem->price * $discountedItem->discount_percentage / 100), 2) }}</p>
-                    <a href="{{ route('menu.index') }}" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
-                        Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-black.svg" alt="" style="width: 16px;">
-                    </a>
+    <div class="container-lg py-5" style="max-width: 1600px;">
+        <div class="custom-offers-section d-flex" style="height: 100%;">
+            <!-- First div - 50% width -->
+            <div class="offer-card" style="flex: 0 0 50%; margin-right: 15px;">
+                <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
+                    @if($discountedItem)
+                        <img src="https://transvelo.github.io/pizzeria/assets/images/banner-1.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 64px; color: white;">
+                            <p class="text-secondary" style="font-size: 1.2rem; font-weight: 400;">Special offer</p>
+                            <h2 class="font-weight-bold" style="font-size: 2.5rem; font-weight: 600;">{{ $discountedItem->name }}</h2>
+                            <p style="font-size: 1rem; font-weight: 500;">Original Price: ${{ number_format($discountedItem->price, 2) }}</p>
+                            <p style="font-size: 1.2rem; font-weight: 600;">Now: ${{ number_format($discountedItem->price - ($discountedItem->price * $discountedItem->discount_percentage / 100), 2) }}</p>
+                            <a href="{{ route('menu.index') }}" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
+                                Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-black.svg" alt="" style="width: 16px;">
+                            </a>
+                        </div>
+                    @else
+                        <div class="d-flex justify-content-center align-items-center" style="background-color: #f8f9fa; height: 100%; padding: 64px; border-radius: 16px;">
+                            <h2 class="font-weight-bold text-secondary" style="font-size: 2.5rem;">No discounted items available at the moment. Check back later!</h2>
+                        </div>
+                    @endif
                 </div>
             </div>
-        </div>
     
-        <!-- Second and Third div - 20% width each, stacked vertically -->
-        <div class="d-flex flex-column" style="flex: 0 0 50%; margin-left: 15px;">
-            <div class="offer-card" style="flex: 1; margin-bottom: 15px;">
-                <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
-                    <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                    <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 55px; color: white;">
-                        <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Free Delivery With</p>
-                        <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Pizza Of The Day</h2>
-                        <p class="font-weight-bold" style="font-size: 1.2rem;">Start At</p>
-                        <p style="font-size: 3rem; font-weight: 600;">$32</p>
-                        <p style="font-size: 1.2rem;">99</p>
+            <!-- Second and Third divs - 50% width on the right, stacked vertically -->
+            <div class="d-flex flex-column" style="flex: 0 0 50%; margin-left: 15px;">
+                <!-- Second div -->
+                <div class="offer-card mb-3" style="flex: 1;">
+                    <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
+                        <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 55px; color: white;">
+                            <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Free Delivery With</p>
+                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Pizza Of The Day</h2>
+                            <p class="font-weight-bold" style="font-size: 1.2rem;">Start At</p>
+                            <p style="font-size: 3rem; font-weight: 600;">$32</p>
+                            <p style="font-size: 1.2rem;">99</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="offer-card" style="flex: 1;">
-                <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
-                    <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                    <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: white;">
-                        <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In Delivery Food</h2>
-                        <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
-                            Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-white.svg" alt="" style="width: 16px;">
-                        </a>
+    
+                <!-- Third div -->
+                <div class="offer-card" style="flex: 1;">
+                    <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
+                        <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: white;">
+                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In Delivery Food</h2>
+                            <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
+                                Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-white.svg" alt="" style="width: 16px;">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
     
     <div class="container-xxl pt-5 pb-3">
         <div class="container">

@@ -71,7 +71,22 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
 
     // User-specific reservation routes
     Route::resource('reservations', ReservationController::class)->except(['show']);
+    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+// Admin Orders Routes
+Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+Route::get('/admin/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+Route::patch('/admin/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+
+// Admin Reservations Routes
+Route::get('/admin/reservations', [ReservationController::class, 'index'])->name('admin.reservations.index');
+Route::get('/admin/reservations/{reservation}', [ReservationController::class, 'show'])->name('admin.reservations.show');
+Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+    Route::resource('reservations', ReservationController::class);
+});
+Route::get('reservations/{id}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+Route::put('reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
+Route::get('admin/reservations/{id}', [ReservationController::class, 'show'])->name('admin.reservations.show');
 
 // Cart actions that do not require authentication (e.g., adding/removing items)
 Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');

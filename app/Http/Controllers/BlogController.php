@@ -15,8 +15,16 @@ class BlogController extends Controller
     }
 
     // Method to show a single blog
-    public function show(Blog $blog)
-    {
-        return view('blogs.show', compact('blog'));
-    }
+    public function show($id)
+{
+    // Find the blog post by ID
+    $blog = Blog::findOrFail($id);
+
+    // Increment the view count by 1
+    $blog->increment('views');
+
+    // Return the view with the blog data
+    return view('blogs.show', compact('blog'));
+}
+
 }

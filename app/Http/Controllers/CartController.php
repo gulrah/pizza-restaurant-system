@@ -113,7 +113,7 @@ class CartController extends Controller
         $order = Order::create([
             'user_id' => $user->id,
             'total' => $total,
-            'status' => 'completed',
+            'status' => 'pending',
             'quantity' => $totalQuantity,
             'product_name' => $productNames,
             'address' => $request->input('address'), // Store the delivery address

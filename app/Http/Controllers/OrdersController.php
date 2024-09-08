@@ -9,7 +9,7 @@ class OrdersController extends Controller
 {
     public function index()
 {
-    $orders = Order::where('user_id', auth()->id())->get();
+    $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->with('user')->get();
     return view('orders.index', compact('orders'));
 }
 

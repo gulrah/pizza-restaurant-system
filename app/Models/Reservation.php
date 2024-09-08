@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    // In your Reservation model
-// In Reservation model
-protected $fillable = ['user_id', 'reservation_time', 'number_of_guests', 'special_requests', 'status'];
+    use HasFactory;
 
-    protected $casts = [
-        'reservation_time' => 'datetime', // Casting as datetime
-    ];
+    protected $fillable = ['user_id', 'date', 'time_slot', 'table_number', 'people_count', 'special_requests'];
 
     public function user()
     {

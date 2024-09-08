@@ -25,11 +25,12 @@ class DashboardController extends Controller
         $totalTeamMembers = TeamMember::count();
         $totalContactMessages = ContactMessage::count();
         $lastOrders = Order::latest()->limit(5)->get();
+        $lastReservations = Reservation::latest()->take(5)->get();
 
         return view('admin.dashboard', compact(
             'totalOrders', 'totalReservations', 'totalUsers', 
             'totalMenuItems', 'totalBlogs', 'totalCategories',
-            'totalTeamMembers', 'totalContactMessages', 'lastOrders',
+            'totalTeamMembers', 'totalContactMessages', 'lastOrders','lastReservations',
         ));
     }
 }
