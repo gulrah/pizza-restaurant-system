@@ -16,16 +16,21 @@ class ContactDetailController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $request->validate([
-            'address' => 'nullable|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'nullable|string|max:20',
-        ]);
+{
+    $request->validate([
+        'address' => 'nullable|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone_number' => 'nullable|string|max:20',
+        'twitter' => 'nullable|url|max:255',
+        'facebook' => 'nullable|url|max:255',
+        'linkedin' => 'nullable|url|max:255',
+        'instagram' => 'nullable|url|max:255',
+    ]);
 
-        $contactDetail = ContactDetail::first();
-        $contactDetail->update($request->all());
+    $contactDetail = ContactDetail::first();
+    $contactDetail->update($request->all());
 
-        return redirect()->route('admin.contact_details.edit')->with('success', 'Contact details updated successfully.');
-    }
+    return redirect()->route('admin.contact_details.edit')->with('success', 'Contact details updated successfully.');
+}
+
 }

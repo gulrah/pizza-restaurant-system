@@ -8,16 +8,21 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Image</th>
-                <th scope="col">Excerpt</th>
+                <th scope="col">Views</th>
+                <th scope="col">Date</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($blogs as $blog)
                 <tr>
-                    <td>{{ $blog->title }}</td>
+                    <td>{{ $blog->id }}</td>
+                    <td>
+                        <a href="{{ route('blogs.show', $blog) }}">{{ $blog->title }}</a>
+                    </td>
                     <td>
                         @if($blog->image)
                             <img src="{{ asset('storage/'.$blog->image) }}" alt="Blog Image" style="max-width: 150px; height: auto;">
@@ -25,7 +30,8 @@
                             No Image
                         @endif
                     </td>
-                    <td>{{ $blog->excerpt ? \Illuminate\Support\Str::limit($blog->excerpt, 100) : 'No Excerpt' }}</td>
+                    <td>{{ $blog->views ?? 0 }}</td>
+                    <td>{{ $blog->created_at->format('d M, Y') }}</td>
                     <td>
                         <a href="{{ route('admin.blogs.edit', $blog) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.blogs.destroy', $blog) }}" method="POST" style="display:inline;">

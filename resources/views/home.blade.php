@@ -49,7 +49,7 @@
     </div>
     <div class="container-lg py-5" style="max-width: 1600px;">
         <div class="custom-offers-section d-flex" style="height: 100%;">
-            <!-- First div - 50% width -->
+            <!-- First div - 50% width on the left -->
             <div class="offer-card" style="flex: 0 0 50%; margin-right: 15px;">
                 <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                     @if($discountedItem)
@@ -64,25 +64,24 @@
                             </a>
                         </div>
                     @else
-                        <div class="d-flex justify-content-center align-items-center" style="background-color: #f8f9fa; height: 100%; padding: 64px; border-radius: 16px;">
-                            <h2 class="font-weight-bold text-secondary" style="font-size: 2.5rem;">No discounted items available at the moment. Check back later!</h2>
+                        <img src="https://transvelo.github.io/pizzeria/assets/images/banner-1.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
+                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 64px; color: white;">
+                            <h2 class="font-weight-bold" style="font-size: 2.5rem;">"You can’t make everyone happy, but pizza can."</h2>
                         </div>
                     @endif
                 </div>
             </div>
     
-            <!-- Second and Third divs - 50% width on the right, stacked vertically -->
+            <!-- Second and Third div - 50% width stacked on the right -->
             <div class="d-flex flex-column" style="flex: 0 0 50%; margin-left: 15px;">
                 <!-- Second div -->
                 <div class="offer-card mb-3" style="flex: 1;">
                     <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                         <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
                         <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 55px; color: white;">
-                            <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Free Delivery With</p>
-                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Pizza Of The Day</h2>
-                            <p class="font-weight-bold" style="font-size: 1.2rem;">Start At</p>
+                            <p class="text-secondary" style="font-size: 1.1rem; font-weight: 400;">Pizza with Free Delivery</p>
+                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">Starts At</h2>
                             <p style="font-size: 3rem; font-weight: 600;">$32</p>
-                            <p style="font-size: 1.2rem;">99</p>
                         </div>
                     </div>
                 </div>
@@ -91,9 +90,9 @@
                 <div class="offer-card" style="flex: 1;">
                     <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                         <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
-                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: white;">
-                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In Delivery Food</h2>
-                            <a href="https://pizzeria.madrasthemes.com/shop/" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
+                        <div class="overlay-content" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 50px; color: black;">
+                            <h2 class="font-weight-bold" style="font-size: 2rem; font-weight: 600;">The Fastest In<br>Delivery Food</h2>
+                            <a href="{{ route('menu.index') }}" class="btn btn-primary" style="border-radius: 120px; padding: 14px 30px; font-weight: 600; background-color: #ff5a5f; color: white; text-decoration: none;">
                                 Order Now <img src="https://pizzeria.madrasthemes.com/wp-content/themes/pizzeria/assets/images/right-up-white.svg" alt="" style="width: 16px;">
                             </a>
                         </div>
@@ -102,6 +101,7 @@
             </div>
         </div>
     </div>
+    
     
     
     <div class="container-xxl pt-5 pb-3">
@@ -114,8 +114,8 @@
                 @foreach ($teamMembers as $teamMember)
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item text-center rounded overflow-hidden">
-                            <div class="rounded-circle overflow-hidden m-4">
-                                <img class="img-fluid" src="{{ asset('storage/' . $teamMember->image_path) }}" alt="{{ $teamMember->name }}">
+                            <div class="m-4" style="border-radius: 12px; overflow: hidden;"> <!-- Changed from rounded-circle to a rectangle with small border radius -->
+                                <img class="img-fluid" src="{{ asset('storage/' . $teamMember->image_path) }}" alt="{{ $teamMember->name }}" style="border-radius: 12px;"> <!-- Apply small border radius to image -->
                             </div>
                             <h5 class="mb-0">{{ $teamMember->name }}</h5>
                             <small>{{ $teamMember->job_title }}</small>
@@ -125,6 +125,7 @@
             </div>
         </div>
     </div>
+    
     
     
 

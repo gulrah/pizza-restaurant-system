@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Hero Section -->
 <div class="container-xxl py-5 bg-dark hero-header mb-5" 
      style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
             background-size: cover; background-position: center; height: 50vh;">
@@ -10,8 +11,8 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<!-- Blog Grid Section -->
+    <div class="row row-cols-1 row-cols-md-3 g-4"> <!-- Using the same grid structure from the cart -->
         @foreach ($blogs as $blog)
         <div class="col">
             <div class="card h-100">
@@ -19,7 +20,9 @@
                 <img src="{{ asset('storage/'.$blog->image) }}" class="card-img-top" alt="{{ $blog->title }}" style="height: 200px; object-fit: cover;">
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{{ route('blogs.show', $blog) }}" class="text-decoration-none text-dark">{{ $blog->title }}</a></h5>
+                    <h5 class="card-title">
+                        <a href="{{ route('blogs.show', $blog) }}" class="text-decoration-none text-dark">{{ $blog->title }}</a>
+                    </h5>
                     <p class="card-text">{{ Str::limit($blog->content, 100) }}</p>
                     <a href="{{ route('blogs.show', $blog) }}" class="btn btn-primary">Read more...</a>
                 </div>
