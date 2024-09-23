@@ -1,11 +1,9 @@
 @extends('app')
 
 @section('navbar')
-<!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
     <div class="container-fluid">
         <a href="{{ url('/') }}" class="navbar-brand">
-            <!-- You can replace the below h1 with an image if you prefer -->
             <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>{{ config('app.name', 'Pizza') }}</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,5 +55,4 @@
         </div>
     </div>
 </nav>
-<!-- Navbar End -->
 @endsection

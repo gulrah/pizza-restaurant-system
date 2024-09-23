@@ -14,7 +14,7 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
-    public function show($id)  // Adding the show method
+    public function show($id)
     {
         $order = Order::with('user')->findOrFail($id);
         return view('admin.orders.show', compact('order'));
@@ -22,22 +22,17 @@ class OrderController extends Controller
     public function userOrders()
     {
         $orders = Order::where('user_id', auth()->id())->with('user')->get();
-        return view('orders.index', compact('orders')); // Update the path here
-    }
-    // In Admin\OrderController.php
+        return view('orders.index', compact('orders'));
 public function updateStatus(Request $request, $id)
 {
-    // Validate the status input
     $request->validate([
         'status' => 'required|in:pending,admin_accept,on_way,completed',
     ]);
 
-    // Find the order and update its status
     $order = Order::findOrFail($id);
     $order->status = $request->input('status');
     $order->save();
 
-    // Redirect back with a success message
     return redirect()->back()->with('success', 'Order status updated successfully.');
 }
 

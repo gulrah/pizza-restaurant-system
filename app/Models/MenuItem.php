@@ -18,12 +18,10 @@ class MenuItem extends Model
         'discount_percentage',
     ];
 
-    // Define the relationship to Category
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-     // Method to calculate discounted price
      public function getDiscountedPriceAttribute()
      {
          if ($this->discount_percentage > 0) {

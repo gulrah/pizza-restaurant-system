@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Hero Section -->
 <div class="container-xxl py-5 bg-dark hero-header mb-5" 
      style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
             background-size: cover; background-position: center; height: 50vh;">
@@ -11,7 +10,6 @@
     </div>
 </div>
 
-<!-- Reservation Form -->
 <div class="container mb-5">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -31,19 +29,16 @@
                 <form method="POST" action="{{ route('reservations.store') }}">
                     @csrf
 
-                    <!-- Select Number of People -->
                     <div class="form-group mb-3">
                         <label for="people_count" class="form-label">How many people will come?</label>
                         <input type="number" name="people_count" class="form-control" min="1" max="10" required>
                     </div>
 
-                    <!-- Select Date -->
                     <div class="form-group mb-3">
                         <label for="date" class="form-label">Date</label>
                         <input type="date" name="date" class="form-control" required>
                     </div>
 
-                    <!-- Select Time Slot -->
                     <div class="form-group mb-3">
                         <label for="time_slot" class="form-label">Select Time Slot</label>
                         <select name="time_slot" class="form-control" required>
@@ -54,7 +49,6 @@
                         </select>
                     </div>
 
-                    <!-- Select Table Number -->
                     <div class="form-group mb-3">
                         <label for="table_number" class="form-label">Select Table Number (1-12)</label>
                         <select name="table_number" class="form-control" required>
@@ -64,13 +58,11 @@
                         </select>
                     </div>
 
-                    <!-- Special Requests (Optional) -->
                     <div class="form-group mb-3">
                         <label for="special_requests" class="form-label">Special Requests (Optional)</label>
                         <textarea name="special_requests" class="form-control" rows="3" placeholder="Any specific requests?"></textarea>
                     </div>
 
-                    <!-- Submit Button -->
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary py-3 px-5">Reserve Now</button>
                     </div>

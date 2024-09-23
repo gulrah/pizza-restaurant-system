@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
 
 // Admin Routes with is_admin Middleware
@@ -120,6 +121,24 @@ Route::prefix('admin')->name('admin.')->middleware('is_admin')->group(function (
         'team' => TeamMemberController::class
     ]);
 });
+// Add this route to handle the update functionality for team members
+Route::put('/admin/team/{team}', [TeamMemberController::class, 'update'])->name('admin.team.update');
+
+// Route for deleting a team member
+Route::delete('/admin/team/{team}', [TeamMemberController::class, 'destroy'])->name('admin.team.destroy');
+
+// Route for editing a team member
+Route::get('/admin/team/{team}/edit', [TeamMemberController::class, 'edit'])->name('admin.team.edit');
+
+// Route for creating a new team member
+Route::get('/admin/team/create', [TeamMemberController::class, 'create'])->name('admin.team.create');
+
+// Route for storing a new team member
+Route::post('/admin/team', [TeamMemberController::class, 'store'])->name('admin.team.store');
+
+// Route to list all team members
+Route::get('/admin/team', [TeamMemberController::class, 'index'])->name('admin.team.index');
+
 
 // Authentication routes
 require __DIR__.'/auth.php';

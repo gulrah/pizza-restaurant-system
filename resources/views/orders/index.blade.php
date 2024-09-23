@@ -10,7 +10,6 @@
     </div>
 </div>
 
-<!-- Table Container -->
 <div class="card shadow-sm">
     <div class="card-header bg-primary text-white">
         <h4 class="mb-0">Order List</h4>
@@ -25,19 +24,18 @@
                         <th>Quantity</th>
                         <th>Total Cost</th>
                         <th>Date</th>
-                        <th>Status</th> <!-- Status column to display order status -->
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($orders as $order)
                         <tr>
                             <td>{{ $order->id }}</td>
-                            <td>{{ $order->product_name }}</td> <!-- Product name only -->
-                            <td>{{ $order->quantity }}</td> <!-- Quantity -->
+                            <td>{{ $order->product_name }}</td>
+                            <td>{{ $order->quantity }}</td>
                             <td>${{ number_format($order->total, 2) }}</td>
                             <td>{{ $order->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <!-- Displaying status based on the value -->
                                 @php
                                     $statusLabel = '';
                                     $statusClass = '';
@@ -60,7 +58,6 @@
                                             break;
                                     }
                                 @endphp
-                                <!-- Display the status with the corresponding label and badge -->
                                 <span class="badge {{ $statusClass }}">
                                     {{ $statusLabel }}
                                 </span>
@@ -68,7 +65,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">No orders found</td> <!-- Adjusted colspan to 6 -->
+                            <td colspan="6" class="text-center">No orders found</td> 
                         </tr>
                     @endforelse
                 </tbody>

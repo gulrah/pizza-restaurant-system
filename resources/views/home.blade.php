@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-        <!-- Hero Section -->
         <div class="container-xxl py-5 bg-dark hero-header mb-5" style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/hero-bg.png'); background-size: cover; background-position: center;">
             <div class="container my-5 py-5 text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Authentic Italian Pizzas</h1>
@@ -11,7 +10,6 @@
             </div>
         </div>
     </div>
-    <!-- Navbar & Hero End -->
     <div class="custom-section" style="background-color: #f8f8f8; border-radius: 32px; padding: 40px 15px;">
         <div class="d-flex flex-wrap justify-content-center align-items-center" style="padding-bottom: 21px;">
             <div class="text-center" style="flex-basis: 300px;">
@@ -49,7 +47,6 @@
     </div>
     <div class="container-lg py-5" style="max-width: 1600px;">
         <div class="custom-offers-section d-flex" style="height: 100%;">
-            <!-- First div - 50% width on the left -->
             <div class="offer-card" style="flex: 0 0 50%; margin-right: 15px;">
                 <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                     @if($discountedItem)
@@ -72,9 +69,7 @@
                 </div>
             </div>
     
-            <!-- Second and Third div - 50% width stacked on the right -->
             <div class="d-flex flex-column" style="flex: 0 0 50%; margin-left: 15px;">
-                <!-- Second div -->
                 <div class="offer-card mb-3" style="flex: 1;">
                     <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                         <img src="https://transvelo.github.io/pizzeria/assets/images/banner-2.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
@@ -86,7 +81,6 @@
                     </div>
                 </div>
     
-                <!-- Third div -->
                 <div class="offer-card" style="flex: 1;">
                     <div class="position-relative" style="border-radius: 16px; overflow: hidden;">
                         <img src="https://transvelo.github.io/pizzeria/assets/images/banner-3.png" alt="" class="img-fluid" style="width: 100%; height: auto;">
@@ -126,10 +120,6 @@
         </div>
     </div>
     
-    
-    
-
-<!-- Include Animate.css in the head of your HTML if not already included -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 <!-- About Start -->
@@ -142,13 +132,13 @@
                         <img class="img-fluid rounded w-100 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee">
                     </div>
                     <div class="col-6 text-start">
-                        <img class="img-fluid rounded w-75 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee" style="margin-top: 25%;">
+                        <img class="img-fluid rounded w-75 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1576458088443-04a19bb13da6" style="margin-top: 25%;">
                     </div>
                     <div class="col-6 text-end">
-                        <img class="img-fluid rounded w-75 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee">
+                        <img class="img-fluid rounded w-75 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1458642849426-cfb724f15ef7">
                     </div>
                     <div class="col-6 text-end">
-                        <img class="img-fluid rounded w-100 animate__animated animate__fadeInUp" src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee">
+                        <img class="img-fluid rounded w-100 animate__animated animate__fadeInUp" src="https://plus.unsplash.com/premium_photo-1667682942148-a0c98d1d70db">
                     </div>
                 </div>
             </div>
@@ -182,9 +172,7 @@
         </div>
     </div>
 </div>
-<!-- About End -->
 
-        <!-- Reservation Start -->
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -202,7 +190,6 @@
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
     <script src="app.js"></script>
 
 @endsection

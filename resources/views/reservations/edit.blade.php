@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-<!-- Hero Section -->
 <div class="container-xxl py-5 bg-dark hero-header mb-5" 
      style="background-image: url('https://transvelo.github.io/pizzeria/assets/images/blog-hero.jpg'); 
             background-size: cover; background-position: center; height: 50vh;">
@@ -29,15 +28,13 @@
 
                 <form method="POST" action="{{ route('reservations.update', $reservation->id) }}">
                     @csrf
-                    @method('PUT') <!-- Spoofing the PUT method -->
+                    @method('PUT')
 
-                    <!-- Date -->
                     <div class="form-group mb-3">
                         <label for="date" class="form-label">Date</label>
                         <input type="date" name="date" class="form-control" value="{{ $reservation->date }}" required>
                     </div>
 
-                    <!-- Time Slot -->
                     <div class="form-group mb-3">
                         <label for="time_slot" class="form-label">Time Slot</label>
                         <select name="time_slot" class="form-control" required>
@@ -48,7 +45,6 @@
                         </select>
                     </div>
 
-                    <!-- Table Number -->
                     <div class="form-group mb-3">
                         <label for="table_number" class="form-label">Table Number</label>
                         <select name="table_number" class="form-control" required>
@@ -58,19 +54,16 @@
                         </select>
                     </div>
 
-                    <!-- Number of People -->
                     <div class="form-group mb-3">
                         <label for="people_count" class="form-label">Number of People</label>
                         <input type="number" name="people_count" class="form-control" value="{{ $reservation->people_count }}" required>
                     </div>
 
-                    <!-- Special Requests -->
                     <div class="form-group mb-3">
                         <label for="special_requests" class="form-label">Special Requests (Optional)</label>
                         <textarea name="special_requests" class="form-control" rows="3">{{ $reservation->special_requests }}</textarea>
                     </div>
 
-                    <!-- Submit Button -->
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary py-3 px-5">Update Reservation</button>
                     </div>

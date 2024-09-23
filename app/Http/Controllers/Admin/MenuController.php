@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\MenuItem;
+use App\Http\Controllers\Admin\Storage;
 use Illuminate\Http\Request;
 
 
@@ -12,7 +13,7 @@ class MenuController extends Controller
 {
     public function create()
     {
-        $categories = Category::all(); // Get all categories to populate a dropdown in the form
+        $categories = Category::all(); 
         return view('admin.menu.create', compact('categories'));
     }
 
@@ -22,7 +23,7 @@ class MenuController extends Controller
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'required|numeric',
-        'discount_percentage' => 'nullable|numeric|min:0|max:100', // Validate discount percentage
+        'discount_percentage' => 'nullable|numeric|min:0|max:100',
         'image' => 'nullable|image|max:2048',
         'category_id' => 'nullable|exists:categories,id',
     ]);
@@ -44,13 +45,11 @@ class MenuController extends Controller
         $categories = Category::all();
         $query = MenuItem::with('category');
 
-        // Check if there is a category filter
         if ($request->has('category') && $request->input('category') !== '') {
             $category = $request->input('category');
             $query->where('category_id', $category);
         }
 
-        // Get the menu items
         $menuItems = $query->get();
 
         return view('admin.menu.index', compact('menuItems', 'categories'));
@@ -70,7 +69,7 @@ public function update(Request $request, $id)
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
         'price' => 'required|numeric|min:0',
-        'discount_percentage' => 'nullable|numeric|min:0|max:100', // Validate discount percentage
+        'discount_percentage' => 'nullable|numeric|min:0|max:100',
         'category_id' => 'nullable|exists:categories,id',
         'image' => 'nullable|image|max:2048',
     ]);
@@ -80,7 +79,6 @@ public function update(Request $request, $id)
     $menuItem->update($request->only(['name', 'description', 'price', 'discount_percentage', 'category_id']));
 
     if ($request->hasFile('image')) {
-        // Delete old image if exists
         if ($menuItem->image) {
             Storage::delete($menuItem->image);
         }
@@ -88,5 +86,17 @@ public function update(Request $request, $id)
     }
 
     return redirect()->route('admin.menu.index')->with('success', 'Menu item updated with discount successfully.');
+}
+public function destroy($id)
+{
+    $menuItem = MenuItem::findOrFail($id);
+
+    if ($menuItem->image) {
+        \Storage::disk('public')->delete($menuItem->image);
+    }
+
+    $menuItem->delete();
+
+    return redirect()->route('admin.menu.index')->with('success', 'Menu item deleted successfully.');
 }
 }

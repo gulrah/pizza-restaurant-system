@@ -23,13 +23,11 @@ class Order extends Model
         'status' => 'pending',
     ];
     
-    // Relationship with User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relationship with OrderItem
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

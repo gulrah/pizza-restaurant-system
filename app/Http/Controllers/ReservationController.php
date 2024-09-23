@@ -29,7 +29,6 @@ public function destroy($id)
 
     public function store(Request $request)
 {
-    // Validate the incoming request data
     $request->validate([
         'people_count' => 'required|integer|min:1|max:10',
         'date' => 'required|date',
@@ -37,35 +36,32 @@ public function destroy($id)
         'table_number' => 'required|integer|min:1|max:12',
     ]);
 
-    // Check if the table is already reserved for the selected date and time slot
     $existingReservation = Reservation::where('table_number', $request->table_number)
         ->where('date', $request->date)
         ->where('time_slot', $request->time_slot)
         ->exists();
 
-    // If a reservation exists, return a validation error
     if ($existingReservation) {
         return back()->withErrors([
             'table_number' => 'This table is already reserved for the selected time slot. Please choose another table or time.',
         ])->withInput();
     }
 
-    // Create a new reservation if no conflict exists
     Reservation::create([
         'user_id' => Auth::id(),
         'date' => $request->date,
         'time_slot' => $request->time_slot,
         'people_count' => $request->people_count,
         'table_number' => $request->table_number,
-        'special_requests' => $request->special_requests, // Optional field
+        'special_requests' => $request->special_requests,
     ]);
 
     return redirect()->route('reservations.index')->with('success', 'Your reservation has been made.');
 }
 public function edit($id)
 {
-    $reservation = Reservation::findOrFail($id); // Find the reservation by ID or fail
-    return view('reservations.edit', compact('reservation')); // Pass the reservation to the view
+    $reservation = Reservation::findOrFail($id);
+    return view('reservations.edit', compact('reservation'));
 }
 
 public function update(Request $request, $id)
@@ -77,11 +73,10 @@ public function update(Request $request, $id)
         'table_number' => 'required|integer|min:1|max:12',
     ]);
 
-    // Check if the table is already reserved for the selected date and time slot by another reservation
     $existingReservation = Reservation::where('table_number', $request->table_number)
         ->where('date', $request->date)
         ->where('time_slot', $request->time_slot)
-        ->where('id', '!=', $id) // Exclude the current reservation
+        ->where('id', '!=', $id)
         ->exists();
 
     if ($existingReservation) {
@@ -90,7 +85,6 @@ public function update(Request $request, $id)
         ])->withInput();
     }
 
-    // Update the reservation
     $reservation = Reservation::findOrFail($id);
     $reservation->update([
         'date' => $request->date,

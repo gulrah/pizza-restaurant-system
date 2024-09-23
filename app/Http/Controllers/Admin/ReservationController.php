@@ -10,8 +10,7 @@ class ReservationController extends Controller
 {
     public function index()
 {
-    // Fetch all reservations in descending order of the reservation time
-    $reservations = Reservation::with('user')->orderBy('date', 'desc')->get(); // Adjust 'date' or 'reservation_time' as needed
+    $reservations = Reservation::with('user')->orderBy('date', 'desc')->get();
     return view('admin.reservations.index', compact('reservations'));
 }
 

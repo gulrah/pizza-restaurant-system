@@ -11,7 +11,7 @@ class TeamMemberController extends Controller
 {
     public function index()
     {
-        $teamMembers = TeamMember::all(); // Get all team members
+        $teamMembers = TeamMember::all(); 
         return view('admin.team.index', compact('teamMembers'));
     }
 
@@ -25,12 +25,11 @@ class TeamMemberController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048' // Validate the image, if present
+            'image' => 'nullable|image|max:2048' 
         ]);
 
-        $data = $request->only(['name', 'job_title']); // Get 'name' and 'job_title' from the request
+        $data = $request->only(['name', 'job_title']);
 
-        // Handle the file upload
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $data['image_path'] = $request->image->store('team', 'public');
         }
@@ -40,34 +39,40 @@ class TeamMemberController extends Controller
         return redirect()->route('admin.team.index')->with('success', 'Team member added successfully.');
     }
 
-    public function edit(TeamMember $teamMember)
-    {
-        return view('admin.team.edit', compact('teamMember'));
-    }
+    public function edit($id)
+{
+    $teamMember = TeamMember::findOrFail($id);
+    return view('admin.team.edit', compact('teamMember'));
+}
 
-    public function update(Request $request, TeamMember $teamMember)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'job_title' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048' // Validate the image, if present
-        ]);
 
-        $data = $request->only(['name', 'job_title']);
 
-        // Handle the file upload
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            // Delete old image if exists
-            if ($teamMember->image_path) {
-                Storage::delete('public/' . $teamMember->image_path);
-            }
-            $data['image_path'] = $request->image->store('team', 'public');
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'job_title' => 'required|string|max:255',
+        'image' => 'nullable|image|max:2048'
+    ]);
+
+    $teamMember = TeamMember::findOrFail($id);
+
+    $teamMember->name = $request->input('name');
+    $teamMember->job_title = $request->input('job_title');
+
+    if ($request->hasFile('image')) {
+        if ($teamMember->image_path) {
+            Storage::delete('public/' . $teamMember->image_path);
         }
 
-        $teamMember->update($data);
-
-        return redirect()->route('admin.team.index')->with('success', 'Team member updated successfully.');
+        $teamMember->image_path = $request->file('image')->store('team', 'public');
     }
+
+    $teamMember->save();
+
+    return redirect()->route('admin.team.index')->with('success', 'Team member updated successfully.');
+}
+
 
     public function destroy(TeamMember $teamMember)
     {

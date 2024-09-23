@@ -13,8 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <!-- Libraries Stylesheet -->
     <style>.col {
-        margin-left: 1%;
-        margin-right: 1%;
+        margin-left: 2%;
+        margin-right: 2%;
         width: calc(100% - 2%); /* Adjust width to account for the margins */
     }
     </style>
@@ -90,11 +90,10 @@
                     <a class="nav-link text-white" href="{{ url('/contact') }}">Contact</a>
                 </li>
 
-                <!-- Admin Dashboard Icon, only visible to admin users -->
                 @if(auth()->check() && auth()->user()->is_admin)
                     <li class="nav-item">
                         <a class="nav-link text-warning" href="{{ route('admin.dashboard') }}">
-                            <i class="fas fa-user-cog"></i> <!-- Admin Icon -->
+                            <i class="fas fa-user-cog"></i> 
                         </a>
                     </li>
                 @endif
@@ -114,10 +113,9 @@
                 @guest
                     <a class="btn text-white" href="{{ route('login') }}">Login</a>
                 @else
-                    <!-- User Icon without Outline and with Warning Color -->
                     <div class="nav-item dropdown">
                         <a class="btn text-warning dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> <!-- User Icon -->
+                            <i class="fas fa-user"></i> 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{ url('/profile') }}">Profile</a></li>
@@ -143,7 +141,7 @@
         </main>
 
 <!-- Footer Start -->
-<div class="container-fluid text-secondary" style="background-color: #1a1a1a; color: #DC3545; margin-top: 90px;">
+<div class="container-fluid text-warning" style="background-color: #1a1a1a; margin-top: 90px;">
     <div class="container">
         <div class="row gx-5">
             <div class="col-lg-4 col-md-6 mb-lg-n5">
@@ -158,9 +156,6 @@
             </div>
             <div class="col-lg-8 col-md-6">
                 <div class="row gx-5">
-                    @php
-                        $contactDetail = \App\Models\ContactDetail::first();
-                    @endphp
                     <div class="col-lg-6 col-md-12 pt-5 mb-5">
                         <h4 class="mb-4" style="color: #F5CA48;">Get In Touch</h4>
                         <div class="d-flex align-items-center mb-3">
@@ -208,6 +203,7 @@
     </div>
 </div>
 <!-- Footer End -->
+
     </div>
 
     <!-- Script Section -->

@@ -34,7 +34,7 @@
                         <th scope="col">Date</th>
                         <th scope="col">Time</th>
                         <th scope="col">Table Number</th>
-                        <th scope="col">Guests</th> <!-- Added column for Guests -->
+                        <th scope="col">Guests</th>
                         <th scope="col">Special Requests</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -45,7 +45,7 @@
                             <td>{{ $reservation->date }}</td>
                             <td>{{ ucfirst($reservation->time_slot) }} ({{ $reservation->time_slot == 'breakfast' ? '8:00 AM' : ($reservation->time_slot == 'lunch' ? '12:30 PM' : ($reservation->time_slot == 'afternoon' ? '4:00 PM' : '7:00 PM')) }})</td>
                             <td>Table {{ $reservation->table_number }}</td>
-                            <td>{{ $reservation->people_count }} guests</td> <!-- Display the number of guests -->
+                            <td>{{ $reservation->people_count }} guests</td>
                             <td>{{ $reservation->special_requests ? $reservation->special_requests : 'None' }}</td>
                             <td>
                                 <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" style="display:inline;">

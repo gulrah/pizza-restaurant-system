@@ -24,10 +24,9 @@ class User extends Authenticatable
         'address',
         'phone',
     ];
-    // In the User model
 public function getIsAdminAttribute()
 {
-    return $this->role === 'admin'; // Adjust this logic based on how you store roles
+    return $this->role === 'admin'; 
 }
 
 

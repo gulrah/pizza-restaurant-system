@@ -9,24 +9,22 @@ use App\Models\OrderItem;
 
 class CartController extends Controller
 {
-    // Add item to cart
     public function add(Request $request)
     {
         if (!auth()->check()) {
-            return redirect()->route('login'); // Redirect to login if not authenticated
+            return redirect()->route('login');
         }
 
         $item = MenuItem::findOrFail($request->item_id);
         $cart = session()->get('cart', []);
 
-        // If item does not exist in cart, add it, otherwise increment quantity
         if (!isset($cart[$item->id])) {
             $cart[$item->id] = [
                 "name" => $item->name,
                 "quantity" => 1,
                 "price" => $item->price,
                 "image" => $item->image,
-                "discount_percentage" => $item->discount_percentage ?? 0 // Ensure discount is stored
+                "discount_percentage" => $item->discount_percentage ?? 0 
             ];
         } else {
             $cart[$item->id]['quantity']++;
@@ -36,28 +34,47 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
-    // Update item quantity in the cart
     public function update(Request $request)
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login'); // Redirect to login if not authenticated
+{
+    // Check if the user is authenticated
+    if (!auth()->check()) {
+        if ($request->ajax()) {
+            return response()->json(['success' => false, 'message' => 'Please log in to update the cart.'], 401);
         }
-
-        $cart = session()->get('cart', []);
-        if (isset($cart[$request->item_id])) {
-            $cart[$request->item_id]['quantity'] = $request->quantity;
-            session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Cart updated successfully!');
-        }
-
-        return redirect()->back()->with('error', 'Item not found in cart.');
+        return redirect()->route('login');
     }
 
-    // Remove item from the cart
+    // Get the current cart session
+    $cart = session()->get('cart', []);
+
+    // Check if the item exists in the cart
+    if (isset($cart[$request->item_id])) {
+        // Update the quantity of the item in the cart
+        $cart[$request->item_id]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+
+        // Check if the request is an AJAX request
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Cart updated successfully!']);
+        }
+
+        // Redirect back with a success message for non-AJAX requests
+        return redirect()->back()->with('success', 'Cart updated successfully!');
+    }
+
+    // If the item is not found in the cart
+    if ($request->ajax()) {
+        return response()->json(['success' => false, 'message' => 'Item not found in cart.'], 404);
+    }
+
+    return redirect()->back()->with('error', 'Item not found in cart.');
+}
+
+
     public function remove(Request $request)
     {
         if (!auth()->check()) {
-            return redirect()->route('login'); // Redirect to login if not authenticated
+            return redirect()->route('login'); 
         }
 
         $cart = session()->get('cart', []);
@@ -70,7 +87,6 @@ class CartController extends Controller
         return redirect()->back()->with('error', 'Item not found in cart.');
     }
 
-    // Show payment form
     public function paymentForm()
     {
         $cart = session('cart');
@@ -81,7 +97,6 @@ class CartController extends Controller
         return view('cart.payment', compact('cart'));
     }
 
-    // Process payment and create order
     public function processPayment(Request $request)
     {
         $request->validate([
@@ -89,7 +104,7 @@ class CartController extends Controller
             'expiry_date' => 'required|date_format:m/y',
             'cvv' => 'required|digits:3',
             'address' => 'required|string|max:255',
-            'special_requests' => 'nullable|string|max:1000', // Optional field
+            'special_requests' => 'nullable|string|max:1000',
         ]);
     
         $cart = session('cart');
@@ -97,10 +112,8 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
     
-        // Get user details
         $user = auth()->user();
     
-        // Calculate total and apply discount
         $total = array_sum(array_map(function ($item) {
             $discountedPrice = $item['price'] - ($item['price'] * ($item['discount_percentage'] / 100));
             return $discountedPrice * $item['quantity'];
@@ -109,35 +122,31 @@ class CartController extends Controller
         $totalQuantity = array_sum(array_column($cart, 'quantity'));
         $productNames = implode(', ', array_column($cart, 'name'));
     
-        // Create a new order
         $order = Order::create([
             'user_id' => $user->id,
             'total' => $total,
             'status' => 'pending',
             'quantity' => $totalQuantity,
             'product_name' => $productNames,
-            'address' => $request->input('address'), // Store the delivery address
-            'special_requests' => $request->input('special_requests'), // Store optional special requests
+            'address' => $request->input('address'),
+            'special_requests' => $request->input('special_requests'),
             'email' => $user->email
         ]);
     
-        // Save each item in the order, including price
         foreach ($cart as $id => $details) {
-            $price = $details['price']; // Retrieve price from cart
-            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100)); // Apply discount if applicable
+            $price = $details['price'];
+            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100));
     
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $id,
                 'quantity' => $details['quantity'],
-                'price' => $discountedPrice, // Store the discounted price
+                'price' => $discountedPrice,
             ]);
         }
     
-        // Clear the cart
         session()->forget('cart');
     
-        // Pass order and user details to the success page
         return view('checkout.success', [
             'order' => $order,
             'cart' => $cart,
@@ -145,18 +154,16 @@ class CartController extends Controller
         ]);
     }
 
-    // Display the cart
     public function index()
     {
         $cart = session()->get('cart');
         return view('cart.index', compact('cart'));
     }
 
-    // Handle checkout and create order
     public function checkout(Request $request)
     {
         if (!auth()->check()) {
-            return redirect()->route('login'); // Redirect to login if not authenticated
+            return redirect()->route('login');
         }
 
         $cart = session('cart');
@@ -164,10 +171,8 @@ class CartController extends Controller
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
-        // Get user details
         $user = auth()->user();
 
-        // Calculate total and apply discount
         $total = array_sum(array_map(function ($item) {
             $discountedPrice = $item['price'] - ($item['price'] * ($item['discount_percentage'] / 100));
             return $discountedPrice * $item['quantity'];
@@ -176,34 +181,30 @@ class CartController extends Controller
         $totalQuantity = array_sum(array_column($cart, 'quantity'));
         $productNames = implode(', ', array_column($cart, 'name'));
 
-        // Create a new order
         $order = Order::create([
             'user_id' => $user->id,
             'total' => $total,
             'status' => 'completed',
             'quantity' => $totalQuantity,
             'product_name' => $productNames,
-            'address' => $request->input('address'), // Store the delivery address
+            'address' => $request->input('address'),
             'email' => $user->email
         ]);
 
-        // Save each item in the order, including price
         foreach ($cart as $id => $details) {
-            $price = $details['price']; // Retrieve price from cart
-            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100)); // Apply discount if applicable
+            $price = $details['price'];
+            $discountedPrice = $price - ($price * ($details['discount_percentage'] / 100));
 
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $id,
                 'quantity' => $details['quantity'],
-                'price' => $discountedPrice, // Store the discounted price
+                'price' => $discountedPrice,
             ]);
         }
 
-        // Clear the cart
         session()->forget('cart');
 
-        // Redirect to success page
         return view('checkout.success', [
             'order' => $order,
             'cart' => $cart,

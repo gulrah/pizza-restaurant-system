@@ -11,7 +11,7 @@ class BlogController extends Controller
 {
     public function index()
 {
-    $blogs = Blog::all(); // Or use a paginated query if you have a lot of posts
+    $blogs = Blog::all(); 
     return view('admin.blogs.index', compact('blogs'));
 }
 
@@ -25,13 +25,12 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048' // Image file validation
+            'image' => 'nullable|image|max:2048' 
         ]);
 
-        $data = $request->only(['title', 'content']); // Get 'title' and 'content' from the request
-        $data['user_id'] = auth()->id(); // Storing the user ID from the authenticated user
+        $data = $request->only(['title', 'content']); 
+        $data['user_id'] = auth()->id();
 
-        // Handle the file upload
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $data['image'] = $request->image->store('blog_images', 'public');
         }
@@ -51,14 +50,12 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048' // Image file validation
+            'image' => 'nullable|image|max:2048'
         ]);
 
         $data = $request->only(['title', 'content']);
 
-        // Handle the file upload
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            // Delete old image if exists
             if ($blog->image) {
                 Storage::delete('public/' . $blog->image);
             }

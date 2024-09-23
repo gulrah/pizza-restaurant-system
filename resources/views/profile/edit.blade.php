@@ -28,7 +28,6 @@
                         @csrf
                         @method('PATCH')
 
-                        <!-- Name field -->
                         <div class="form-group row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
                             <div class="col-md-6">
@@ -41,7 +40,6 @@
                             </div>
                         </div>
 
-                        <!-- Email field -->
                         <div class="form-group row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
                             <div class="col-md-6">
@@ -69,20 +67,6 @@
                         </div>
                         
 
-                        {{-- <!-- Address field -->
-                        <div class="form-group row mb-3">
-                            <label for="address" class="col-md-4 col-form-label text-md-end">Address</label>
-                            <div class="col-md-6">
-                                <input id="address" type="text" class="form-control border-0 shadow-sm @error('address') is-invalid @enderror" name="address" value="{{ old('address', $user->address) }}" required autocomplete="address">
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div> --}}
-
-                        <!-- Password field -->
                         <div class="form-group row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">New Password</label>
                             <div class="col-md-6">
@@ -95,7 +79,6 @@
                             </div>
                         </div>
 
-                        <!-- Confirm Password field -->
                         <div class="form-group row mb-3">
                             <label for="password_confirmation" class="col-md-4 col-form-label text-md-end">Confirm New Password</label>
                             <div class="col-md-6">
@@ -103,7 +86,6 @@
                             </div>
                         </div>
 
-                        <!-- Save button -->
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4 text-center">
                                 <button type="submit" class="btn btn-dark px-4 shadow-sm">
