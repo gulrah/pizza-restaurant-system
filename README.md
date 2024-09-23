@@ -1,66 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Pizza Online Food Ordering System
+## This project is a Pizza Online Food Ordering System built using Laravel 10 and MySQL. 
+## It allows users to order pizza, book tables, read blog posts, and includes an admin panel for managing content. 
+## The project is responsive, using Bootstrap for a modern user interface.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Features
+## User Features:
+## - Order Pizza: Browse the menu and add pizzas to the cart.
+## - Cart Management: Manage cart items (add, update, delete).
+## - Table Booking: Book a table with a specified date and time.
+## - Blogs: Read blog posts about the restaurant.
+## - Contact Form: Users can send messages to the admin.
 
-## About Laravel
+## Admin Features:
+## - Admin Panel: Manage orders, menu items, blogs, reservations, and users.
+## - Menu Management: Add, edit, and delete menu items.
+## - Order Management: View, edit, and change the status of orders.
+## - Reservation Management: Manage table bookings.
+## - Blog Management: Create, edit, and delete blog posts.
+## - User Management: Add, edit, and manage users.
+## - Contact Messages: Admins can view messages sent by users.
+## - Contact Details Management: Admins can update contact details.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Technologies Used:
+## - Laravel 10: PHP framework for building the backend.
+## - MySQL: Database for storing user, order, and reservation data.
+## - Bootstrap: Frontend framework for building responsive UI.
+## - Blade: Laravel's templating engine for creating dynamic views.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
+## Prerequisites:
+## - PHP 8.x
+## - Composer
+## - MySQL
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Set up environment variables: Copy the .env.example file to .env and configure your database connection.
 
-## Learning Laravel
+## Generate application key:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Migrate the database:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Seed the database (optional, for demo data):
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Run the application:
 
-## Laravel Sponsors
+## Access the Application:
+## Visit your localhost to access the front-end.
+## The admin panel can be accessed at /admin.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Usage
+## User Flow:
+## - Browse the menu: Users can browse the available pizzas and add items to their cart.
+## - Place an order: Users can review their cart and proceed to checkout.
+## - Book a table: Users can select a date and time to book a table.
+## - Read blogs: Explore blog posts on the website.
+## - Contact Admin: Users can send messages to the admin through the contact form.
+##
+## Admin Flow:
+## - Manage content: Admins can manage orders, menu items, reservations, blogs, users, and contact messages.
+## - Update site settings: Admins can update contact details and view messages sent by users.
 
-### Premium Partners
+## Deployment
+## To deploy this Laravel application to a production environment, configure environment variables for production in your .env file.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Run migrations:
 
-## Contributing
+## Point the server root to the /public directory.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Git Push Instructions
+## After making changes to the project, use Git to push your updates:
 
-## Code of Conduct
+## Initialize Git (if not already done):
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Add changes to staging:
 
-## Security Vulnerabilities
+## Commit the changes:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Push the changes to GitHub:
 
-## License
+## Useful Git Commands:
+## Check the status of your repository:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## View your Git log:
+
+## Contact
+## For any questions or contributions, feel free to contact me:
+
+## Author: Gülnar Rəhimli
+## Email: glnrrahimli@gmail.com
