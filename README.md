@@ -1,89 +1,82 @@
-## Pizza Online Food Ordering System
-## This project is a Pizza Online Food Ordering System built using Laravel 10 and MySQL. 
-## It allows users to order pizza, book tables, read blog posts, and includes an admin panel for managing content. 
-## The project is responsive, using Bootstrap for a modern user interface.
+# Pizza Online Food Ordering System
+
+This project is a **Pizza Online Food Ordering System** built using Laravel 10 and MySQL. It allows users to order pizza, book tables, read blog posts, and includes an admin panel for managing content. The project is fully responsive, utilizing Bootstrap for a modern user interface.
 
 ## Features
-## User Features:
-## - Order Pizza: Browse the menu and add pizzas to the cart.
-## - Cart Management: Manage cart items (add, update, delete).
-## - Table Booking: Book a table with a specified date and time.
-## - Blogs: Read blog posts about the restaurant.
-## - Contact Form: Users can send messages to the admin.
 
-## Admin Features:
-## - Admin Panel: Manage orders, menu items, blogs, reservations, and users.
-## - Menu Management: Add, edit, and delete menu items.
-## - Order Management: View, edit, and change the status of orders.
-## - Reservation Management: Manage table bookings.
-## - Blog Management: Create, edit, and delete blog posts.
-## - User Management: Add, edit, and manage users.
-## - Contact Messages: Admins can view messages sent by users.
-## - Contact Details Management: Admins can update contact details.
+### User Features:
+- **Order Pizza**: Browse the menu and add pizzas to the cart.
+- **Cart Management**: Add, update, and delete cart items.
+- **Table Booking**: Book a table with a specified date and time.
+- **Blogs**: Read blog posts about the restaurant.
+- **Contact Form**: Send messages to the admin.
 
-## Technologies Used:
-## - Laravel 10: PHP framework for building the backend.
-## - MySQL: Database for storing user, order, and reservation data.
-## - Bootstrap: Frontend framework for building responsive UI.
-## - Blade: Laravel's templating engine for creating dynamic views.
+### Admin Features:
+- **Admin Panel**: Manage orders, menu items, blogs, reservations, and users.
+- **Menu Management**: Add, edit, and delete menu items.
+- **Order Management**: View, edit, and change order statuses.
+- **Reservation Management**: Manage table bookings.
+- **Blog Management**: Create, edit, and delete blog posts.
+- **User Management**: Manage users.
+- **Contact Messages**: View messages sent by users.
+- **Contact Details Management**: Update contact details.
+
+## Technologies Used
+- **Laravel 10**: Backend development framework.
+- **MySQL**: Database for storing user, order, and reservation data.
+- **Bootstrap**: Frontend framework for responsive UI.
+- **Blade**: Laravel’s templating engine for dynamic views.
 
 ## Installation
-## Prerequisites:
-## - PHP 8.x
-## - Composer
-## - MySQL
 
-## Set up environment variables: Copy the .env.example file to .env and configure your database connection.
+### Prerequisites:
+- PHP 8.x
+- Composer
+- MySQL
 
-## Generate application key:
+### Steps:
+1. Set up environment variables: Copy `.env.example` to `.env` and configure your database connection.
+2. Generate application key: `php artisan key:generate`
+3. Migrate the database: `php artisan migrate`
+4. (Optional) Seed the database: `php artisan db:seed`
+5. Run the application: `php artisan serve`
 
-## Migrate the database:
-
-## Seed the database (optional, for demo data):
-
-## Run the application:
-
-## Access the Application:
-## Visit your localhost to access the front-end.
-## The admin panel can be accessed at /admin.
+### Access the Application:
+- Frontend: Visit `localhost` in your browser.
+- Admin Panel: Accessible at `/admin`.
 
 ## Usage
-## User Flow:
-## - Browse the menu: Users can browse the available pizzas and add items to their cart.
-## - Place an order: Users can review their cart and proceed to checkout.
-## - Book a table: Users can select a date and time to book a table.
-## - Read blogs: Explore blog posts on the website.
-## - Contact Admin: Users can send messages to the admin through the contact form.
-##
-## Admin Flow:
-## - Manage content: Admins can manage orders, menu items, reservations, blogs, users, and contact messages.
-## - Update site settings: Admins can update contact details and view messages sent by users.
+
+### User Flow:
+- **Browse the menu**: Select pizzas and add them to the cart.
+- **Place an order**: Review the cart and checkout.
+- **Book a table**: Select date and time for table booking.
+- **Read blogs**: Explore blog posts on the site.
+- **Contact Admin**: Send a message through the contact form.
+
+### Admin Flow:
+- **Manage content**: Admins can manage orders, menu items, reservations, blogs, users, and messages.
+- **Update site settings**: Admins can update contact details and view user messages.
 
 ## Deployment
-## To deploy this Laravel application to a production environment, configure environment variables for production in your .env file.
+To deploy this Laravel application in a production environment:
+1. Configure environment variables for production in the `.env` file.
+2. Run migrations: `php artisan migrate`
+3. Point the server root to the `/public` directory.
 
-## Run migrations:
+## Git Workflow
 
-## Point the server root to the /public directory.
+### Basic Commands:
+1. **Initialize Git**: `git init` (if not already done).
+2. **Add changes**: `git add .`
+3. **Commit changes**: `git commit -m "Your message"`
+4. **Push changes**: `git push origin main`
 
-## Git Push Instructions
-## After making changes to the project, use Git to push your updates:
-
-## Initialize Git (if not already done):
-
-## Add changes to staging:
-
-## Commit the changes:
-
-## Push the changes to GitHub:
-
-## Useful Git Commands:
-## Check the status of your repository:
-
-## View your Git log:
+### Useful Git Commands:
+- Check status: `git status`
+- View log: `git log`
 
 ## Contact
-## For any questions or contributions, feel free to contact me:
 
-## Author: Gülnar Rəhimli
-## Email: glnrrahimli@gmail.com
+Author: **Gülnar Rəhimli**  
+Email: [glnrrahimli@gmail.com](mailto:glnrrahimli@gmail.com)
